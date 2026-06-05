@@ -668,7 +668,9 @@ class Graph(Node):
         )
         return self
 
-    def addN(self: _GraphT, triples_or_quads: Iterable[_TripleOrQuadType]) -> _GraphT:  # noqa: N802
+    def addN(  # noqa: N802
+        self: _GraphT, triples_or_quads: Iterable[_TripleOrQuadType]
+    ) -> _GraphT:
         """Add a sequence of triples or quads.
 
         .. deprecated::
@@ -943,12 +945,12 @@ class Graph(Node):
         (subject, predicate, object).
         """
         (subject, predicate, object_) = triple
-        assert subject is not None, (
-            "s can't be None in .set([s,p,o]), as it would remove (*, p, *)"
-        )
-        assert predicate is not None, (
-            "p can't be None in .set([s,p,o]), as it would remove (s, *, *)"
-        )
+        assert (
+            subject is not None
+        ), "s can't be None in .set([s,p,o]), as it would remove (*, p, *)"
+        assert (
+            predicate is not None
+        ), "p can't be None in .set([s,p,o]), as it would remove (s, *, *)"
         self.remove((subject, predicate, None))
         self.add((subject, predicate, object_))
         return self
@@ -2188,9 +2190,9 @@ class ConjunctiveGraph(Graph):
                 stacklevel=2,
             )
 
-        assert self.store.context_aware, (
-            "ConjunctiveGraph must be backed by a context aware store."
-        )
+        assert (
+            self.store.context_aware
+        ), "ConjunctiveGraph must be backed by a context aware store."
         self.context_aware = True
         self.default_union = True  # Conjunctive!
         self._default_context: _ContextType = Graph(
@@ -3366,8 +3368,8 @@ class ReadOnlyGraphAggregate(ConjunctiveGraph):
     def bind(  # type: ignore[override]
         self,
         prefix: str | None,
-        namespace: Any,
-        override: bool = True,  # noqa: F811
+        namespace: Any,  # noqa: F811
+        override: bool = True,
     ) -> NoReturn:
         raise UnSupportedAggregateOperation()
 
