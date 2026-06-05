@@ -642,7 +642,9 @@ class Graph(Node):
         self.__store.add((s, p, o), self, quoted=False)
         return self
 
-    def add_many(self: _GraphT, triples_or_quads: Iterable[_TripleOrQuadType]) -> _GraphT:
+    def add_many(
+        self: _GraphT, triples_or_quads: Iterable[_TripleOrQuadType]
+    ) -> _GraphT:
         """Add a sequence of triples or quads.
 
         When a triple ``(s, p, o)`` is given, ``self`` is used as the context.
@@ -941,12 +943,12 @@ class Graph(Node):
         (subject, predicate, object).
         """
         (subject, predicate, object_) = triple
-        assert (
-            subject is not None
-        ), "s can't be None in .set([s,p,o]), as it would remove (*, p, *)"
-        assert (
-            predicate is not None
-        ), "p can't be None in .set([s,p,o]), as it would remove (s, *, *)"
+        assert subject is not None, (
+            "s can't be None in .set([s,p,o]), as it would remove (*, p, *)"
+        )
+        assert predicate is not None, (
+            "p can't be None in .set([s,p,o]), as it would remove (s, *, *)"
+        )
         self.remove((subject, predicate, None))
         self.add((subject, predicate, object_))
         return self
@@ -1132,7 +1134,8 @@ class Graph(Node):
         # type error: Argument 1 to "triples_choices" of "Store" has incompatible type "tuple[Union[list[Node], Node], Union[Node, list[Node]], Union[Node, list[Node]]]"; expected "Union[tuple[list[Node], Node, Node], tuple[Node, list[Node], Node], tuple[Node, Node, list[Node]]]"
         # type error note: unpacking discards type info
         for (s, p, o), cg in self.store.triples_choices(
-            (subject, predicate, object_), context=self  # type: ignore[arg-type]
+            (subject, predicate, object_),
+            context=self,  # type: ignore[arg-type]
         ):
             yield s, p, o
 
@@ -2186,7 +2189,7 @@ class ConjunctiveGraph(Graph):
             )
 
         assert self.store.context_aware, (
-            "ConjunctiveGraph must be backed by" " a context aware store."
+            "ConjunctiveGraph must be backed by a context aware store."
         )
         self.context_aware = True
         self.default_union = True  # Conjunctive!
@@ -2364,7 +2367,9 @@ class ConjunctiveGraph(Graph):
         return self.add_many(triples_or_quads)
 
     # type error: Argument 1 of "remove" is incompatible with supertype "Graph"; supertype defines the argument type as "tuple[Optional[Node], Optional[Node], Optional[Node]]"
-    def remove(self: _ConjunctiveGraphT, triple_or_quad: _TripleOrOptionalQuadType) -> _ConjunctiveGraphT:  # type: ignore[override]
+    def remove(
+        self: _ConjunctiveGraphT, triple_or_quad: _TripleOrOptionalQuadType
+    ) -> _ConjunctiveGraphT:  # type: ignore[override]
         """Removes a triple or quads
 
         if a triple is given it is removed from all contexts
@@ -2802,9 +2807,7 @@ class Dataset(ConjunctiveGraph):
         return (self.store, self.default_union, self.default_context.base)
 
     def __str__(self) -> str:
-        pattern = (
-            "[a rdflib:Dataset;rdflib:storage " "[a rdflib:Store;rdfs:label '%s']]"
-        )
+        pattern = "[a rdflib:Dataset;rdflib:storage [a rdflib:Store;rdfs:label '%s']]"
         return pattern % self.store.__class__.__name__
 
     # type error: Return type "tuple[Type[Dataset], tuple[Store, bool]]" of "__reduce__" incompatible with return type "tuple[Type[Graph], tuple[Store, IdentifiedNode]]" in supertype "ConjunctiveGraph"
@@ -3186,7 +3189,7 @@ class UnSupportedAggregateOperation(Exception):  # noqa: N818
         pass
 
     def __str__(self) -> str:
-        return "This operation is not supported by ReadOnlyGraphAggregate " "instances"
+        return "This operation is not supported by ReadOnlyGraphAggregate instances"
 
 
 class ReadOnlyGraphAggregate(ConjunctiveGraph):
@@ -3361,7 +3364,10 @@ class ReadOnlyGraphAggregate(ConjunctiveGraph):
 
     # type error: Signature of "bind" incompatible with supertype "Graph"
     def bind(  # type: ignore[override]
-        self, prefix: str | None, namespace: Any, override: bool = True  # noqa: F811
+        self,
+        prefix: str | None,
+        namespace: Any,
+        override: bool = True,  # noqa: F811
     ) -> NoReturn:
         raise UnSupportedAggregateOperation()
 
