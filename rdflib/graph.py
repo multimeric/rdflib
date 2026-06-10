@@ -342,7 +342,7 @@ _OptionalQuadType = Tuple[
 ]
 _TripleOrOptionalQuadType = Union["_TripleType", "_OptionalQuadType"]
 _TripleOrQuadType = Union["_TripleType", "_QuadType"]
-_OptionalIdentifiedQuadType = tuple[
+_OptionalIdentifiedQuadType = Tuple[
     "_SubjectType", "_PredicateType", "_ObjectType", Optional["_ContextIdentifierType"]
 ]
 _TriplePatternType = Tuple[
