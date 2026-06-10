@@ -340,13 +340,13 @@ _QuadType = Tuple["_SubjectType", "_PredicateType", "_ObjectType", "_ContextType
 _OptionalQuadType = Tuple[
     "_SubjectType", "_PredicateType", "_ObjectType", Optional["_ContextType"]
 ]
-_TriplePatternType = Tuple[
-    Optional["_SubjectType"], Optional["_PredicateType"], Optional["_ObjectType"]
-]
 _TripleOrOptionalQuadType = Union["_TripleType", "_OptionalQuadType"]
 _TripleOrQuadType = Union["_TripleType", "_QuadType"]
 _OptionalIdentifiedQuadType = tuple[
     "_SubjectType", "_PredicateType", "_ObjectType", Optional["_ContextIdentifierType"]
+]
+_TriplePatternType = Tuple[
+    Optional["_SubjectType"], Optional["_PredicateType"], Optional["_ObjectType"]
 ]
 _TriplePathPatternType = Tuple[Optional["_SubjectType"], Path, Optional["_ObjectType"]]
 _QuadPatternType = Tuple[
