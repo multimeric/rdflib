@@ -343,9 +343,9 @@ _OptionalQuadType = Tuple[
 _TriplePatternType = Tuple[
     Optional["_SubjectType"], Optional["_PredicateType"], Optional["_ObjectType"]
 ]
-_TripleOrOptionalQuadType: te.TypeAlias = Union[_TripleType, _OptionalQuadType]
-_TripleOrQuadType: te.TypeAlias = Union[_TripleType, _QuadType]
-_OptionalIdentifiedQuadType: te.TypeAlias = tuple[
+_TripleOrOptionalQuadType = Union[_TripleType, _OptionalQuadType]
+_TripleOrQuadType = Union[_TripleType, _QuadType]
+_OptionalIdentifiedQuadType = tuple[
     _SubjectType, _PredicateType, _ObjectType, Optional[_ContextIdentifierType]
 ]
 _TriplePathPatternType = Tuple[Optional["_SubjectType"], Path, Optional["_ObjectType"]]
