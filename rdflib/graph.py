@@ -323,7 +323,7 @@ from rdflib.term import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Generator, Iterable, Iterator, Mapping
+    from collections.abc import Iterator
 
     import typing_extensions as te
 
@@ -343,10 +343,10 @@ _OptionalQuadType = Tuple[
 _TriplePatternType = Tuple[
     Optional["_SubjectType"], Optional["_PredicateType"], Optional["_ObjectType"]
 ]
-_TripleOrOptionalQuadType = Union[_TripleType, _OptionalQuadType]
-_TripleOrQuadType = Union[_TripleType, _QuadType]
+_TripleOrOptionalQuadType = Union["_TripleType", "_OptionalQuadType"]
+_TripleOrQuadType = Union["_TripleType", "_QuadType"]
 _OptionalIdentifiedQuadType = tuple[
-    _SubjectType, _PredicateType, _ObjectType, Optional[_ContextIdentifierType]
+    "_SubjectType", "_PredicateType", "_ObjectType", Optional["_ContextIdentifierType"]
 ]
 _TriplePathPatternType = Tuple[Optional["_SubjectType"], Path, Optional["_ObjectType"]]
 _QuadPatternType = Tuple[
