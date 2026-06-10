@@ -1130,7 +1130,8 @@ class Graph(Node):
         # type error: Argument 1 to "triples_choices" of "Store" has incompatible type "Tuple[Union[List[Node], Node], Union[Node, List[Node]], Union[Node, List[Node]]]"; expected "Union[Tuple[List[Node], Node, Node], Tuple[Node, List[Node], Node], Tuple[Node, Node, List[Node]]]"
         # type error note: unpacking discards type info
         for (s, p, o), cg in self.store.triples_choices(
-            (subject, predicate, object_), context=self  # type: ignore[arg-type]
+            (subject, predicate, object_),
+            context=self,  # type: ignore[arg-type]
         ):
             yield s, p, o
 
@@ -2181,9 +2182,9 @@ class ConjunctiveGraph(Graph):
                 stacklevel=2,
             )
 
-        assert self.store.context_aware, (
-            "ConjunctiveGraph must be backed by" " a context aware store."
-        )
+        assert (
+            self.store.context_aware
+        ), "ConjunctiveGraph must be backed by a context aware store."
         self.context_aware = True
         self.default_union = True  # Conjunctive!
         self._default_context: _ContextType = Graph(
@@ -2351,7 +2352,9 @@ class ConjunctiveGraph(Graph):
         return self.add_many(triples_or_quads)
 
     # type error: Argument 1 of "remove" is incompatible with supertype "Graph"; supertype defines the argument type as "tuple[Optional[Node], Optional[Node], Optional[Node]]"
-    def remove(self: _ConjunctiveGraphT, triple_or_quad: _TripleOrOptionalQuadType) -> _ConjunctiveGraphT:  # type: ignore[override]
+    def remove(
+        self: _ConjunctiveGraphT, triple_or_quad: _TripleOrOptionalQuadType
+    ) -> _ConjunctiveGraphT:  # type: ignore[override]
         """Removes a triple or quads
 
         if a triple is given it is removed from all contexts
@@ -2786,9 +2789,7 @@ class Dataset(ConjunctiveGraph):
         return super(Dataset, self).identifier
 
     def __str__(self) -> str:
-        pattern = (
-            "[a rdflib:Dataset;rdflib:storage " "[a rdflib:Store;rdfs:label '%s']]"
-        )
+        pattern = "[a rdflib:Dataset;rdflib:storage [a rdflib:Store;rdfs:label '%s']]"
         return pattern % self.store.__class__.__name__
 
     # type error: Return type "Tuple[Type[Dataset], Tuple[Store, bool]]" of "__reduce__" incompatible with return type "Tuple[Type[Graph], Tuple[Store, IdentifiedNode]]" in supertype "ConjunctiveGraph"
@@ -3159,7 +3160,7 @@ class UnSupportedAggregateOperation(Exception):  # noqa: N818
         pass
 
     def __str__(self) -> str:
-        return "This operation is not supported by ReadOnlyGraphAggregate " "instances"
+        return "This operation is not supported by ReadOnlyGraphAggregate instances"
 
 
 class ReadOnlyGraphAggregate(ConjunctiveGraph):
@@ -3336,7 +3337,10 @@ class ReadOnlyGraphAggregate(ConjunctiveGraph):
 
     # type error: Signature of "bind" incompatible with supertype "Graph"
     def bind(  # type: ignore[override]
-        self, prefix: Optional[str], namespace: Any, override: bool = True  # noqa: F811
+        self,
+        prefix: str | None,
+        namespace: Any,  # noqa: F811
+        override: bool = True,
     ) -> NoReturn:
         raise UnSupportedAggregateOperation()
 
