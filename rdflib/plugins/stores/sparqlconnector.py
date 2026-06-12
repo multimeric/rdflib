@@ -125,8 +125,10 @@ class SPARQLConnector:
                     )
                 )
             except HTTPError as e:
-                # type error: Incompatible return value type (got "Tuple[int, str, None]", expected "Result")
-                return e.code, str(e), None  # type: ignore[return-value]
+                if e.code == 401:
+                    raise ValueError(
+                        "It looks like you need to authenticate with this SPARQL Store. HTTP unauthorized"
+                    )
         elif self.method == "POST_FORM":
             params["query"] = query
             args["params"].update(params)

@@ -93,11 +93,15 @@ def Group(p: CompValue, expr: list[Variable] | None = None) -> CompValue:
     return CompValue("Group", p=p, expr=expr)
 
 
+IdentifierTuple = tuple[Identifier, Identifier, Identifier]
+KnownTermsResult = tuple[int, int, bool]
+
+
 def _knownTerms(
-    triple: tuple[Identifier, Identifier, Identifier],
+    triple: IdentifierTuple,
     varsknown: set[typing.Union[BNode, Variable]],
     varscount: dict[Identifier, int],
-) -> tuple[int, int, bool]:
+) -> KnownTermsResult:
     return (
         len(
             [
@@ -111,9 +115,7 @@ def _knownTerms(
     )
 
 
-def reorderTriples(
-    l_: Iterable[tuple[Identifier, Identifier, Identifier]]
-) -> list[tuple[Identifier, Identifier, Identifier]]:
+def reorderTriples(l_: Iterable[IdentifierTuple]) -> list[IdentifierTuple]:
     """
     Reorder triple patterns so that we execute the
     ones with most bindings first
@@ -123,15 +125,14 @@ def reorderTriples(
         if isinstance(term, (Variable, BNode)):
             varsknown.add(term)
 
-    # NOTE on type errors: most of these are because the same variable is used
-    # for different types.
-
-    # type error: List comprehension has incompatible type list[tuple[None, tuple[Identifier, Identifier, Identifier]]]; expected list[tuple[Identifier, Identifier, Identifier]]
-    l_ = [(None, x) for x in l_]  # type: ignore[misc]
+    # The first value of the tuple is unused and will be re-assigned in the loop
+    decorated_triples: list[tuple[KnownTermsResult, IdentifierTuple]] = [
+        ((0, 0, False), x) for x in l_
+    ]
     varsknown: set[typing.Union[BNode, Variable]] = set()
     varscount: dict[Identifier, int] = defaultdict(int)
-    for t in l_:
-        for c in t[1]:
+    for s in decorated_triples:
+        for c in s[1]:
             if isinstance(c, (Variable, BNode)):
                 varscount[c] += 1
     i = 0
@@ -143,21 +144,20 @@ def reorderTriples(
 
     # we sort by decorate/undecorate, since we need the value of the sort keys
 
-    while i < len(l_):
-        # type error: Generator has incompatible item type "tuple[Any, Identifier]"; expected "tuple[Identifier, Identifier, Identifier]"
-        # type error: Argument 1 to "_knownTerms" has incompatible type "Identifier"; expected "tuple[Identifier, Identifier, Identifier]"
-        l_[i:] = sorted((_knownTerms(x[1], varsknown, varscount), x[1]) for x in l_[i:])  # type: ignore[misc,arg-type]
-        # type error: Incompatible types in assignment (expression has type "str", variable has type "tuple[Identifier, Identifier, Identifier]")
-        t = l_[i][0][0]  # type: ignore[assignment] # top block has this many terms bound
+    while i < len(decorated_triples):
+        decorated_triples[i:] = sorted(
+            (_knownTerms(x[1], varsknown, varscount), x[1])
+            for x in decorated_triples[i:]
+        )
+        t: int = decorated_triples[i][0][0]
         j = 0
-        while i + j < len(l_) and l_[i + j][0][0] == t:
-            for c in l_[i + j][1]:
+        while (i + j) < len(decorated_triples) and decorated_triples[i + j][0][0] == t:
+            for c in decorated_triples[i + j][1]:
                 _addvar(c, varsknown)
             j += 1
         i += 1
 
-    # type error: List comprehension has incompatible type list[Identifier]; expected list[tuple[Identifier, Identifier, Identifier]]
-    return [x[1] for x in l_]  # type: ignore[misc]
+    return [x[1] for x in decorated_triples]
 
 
 def triples(

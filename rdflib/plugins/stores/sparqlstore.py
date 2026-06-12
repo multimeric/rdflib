@@ -405,11 +405,6 @@ class SPARQLStore(SPARQLConnector, Store):
         )
 
         if vars:
-            if type(result) is tuple:
-                if result[0] == 401:
-                    raise ValueError(
-                        "It looks like you need to authenticate with this SPARQL Store. HTTP unauthorized"
-                    )
             for row in result:
                 if TYPE_CHECKING:
                     # This will be a ResultRow because if vars is truthish then
