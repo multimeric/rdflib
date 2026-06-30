@@ -111,7 +111,7 @@ jobs:
       matrix:
         include:
           - task: "gha:lint"
-            python-version: 3.8
+            python-version: 3.10
     steps:
       - uses: actions/checkout@v6
       - name: Cache XDG_CACHE_HOME
