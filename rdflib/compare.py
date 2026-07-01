@@ -212,8 +212,8 @@ class IsomorphicGraph(ConjunctiveGraph):
 
 HashFunc = Callable[[str], int]
 ColorItem = tuple[Union[int, str], URIRef, Union[int, str]]
-ColorItemtuple = tuple[ColorItem, ...]
-HashCache = Optional[dict[ColorItemtuple, str]]
+ColorItemTuple = tuple[ColorItem, ...]
+HashCache = Optional[dict[ColorItemTuple, str]]
 Stats = dict[str, Union[int, str]]
 
 
@@ -222,7 +222,7 @@ class Color:
         self,
         nodes: list[IdentifiedNode],
         hashfunc: HashFunc,
-        color: ColorItemtuple = (),
+        color: ColorItemTuple = (),
         hash_cache: HashCache = None,
     ):
         if hash_cache is None:
