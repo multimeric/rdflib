@@ -56,10 +56,10 @@ def get_unique_plugin_names(type: type[PluginT]) -> set[str]:
 GHNode = Union[Identifier, frozenset[tuple[Identifier, Identifier, Identifier]]]
 GHTriple = tuple[GHNode, GHNode, GHNode]
 GHTripleSet = set[GHTriple]
-GHTriplefrozenset = frozenset[GHTriple]
+GHTripleFrozenSet = frozenset[GHTriple]
 GHQuad = tuple[GHNode, GHNode, GHNode, Identifier]
 GHQuadSet = set[GHQuad]
-GHQuadfrozenset = frozenset[GHQuad]
+GHQuadFrozenSet = frozenset[GHQuad]
 
 NodeT = TypeVar("NodeT", bound=GHNode)
 
@@ -138,7 +138,7 @@ class GraphHelper:
     @classmethod
     def triple_set(
         cls, graph: Graph, bnode_handling: BNodeHandling = BNodeHandling.COMPARE
-    ) -> GHTriplefrozenset:
+    ) -> GHTripleFrozenSet:
         result: GHTripleSet = set()
         for sn, pn, on in graph.triples((None, None, None)):
             s, p, o = cls.nodes((sn, pn, on), bnode_handling)
@@ -160,11 +160,11 @@ class GraphHelper:
         cls,
         graphs: Iterable[Graph],
         bnode_handling: BNodeHandling = BNodeHandling.COMPARE,
-    ) -> list[GHTriplefrozenset]:
+    ) -> list[GHTripleFrozenSet]:
         """
         Extracts the set of all triples from the supplied Graph.
         """
-        result: list[GHTriplefrozenset] = []
+        result: list[GHTripleFrozenSet] = []
         for graph in graphs:
             result.append(cls.triple_set(graph, bnode_handling))
         return result
@@ -174,7 +174,7 @@ class GraphHelper:
         cls,
         graph: ConjunctiveGraph,
         bnode_handling: BNodeHandling = BNodeHandling.COMPARE,
-    ) -> GHQuadfrozenset:
+    ) -> GHQuadFrozenSet:
         """
         Extracts the set of all quads from the supplied ConjunctiveGraph.
         """
@@ -203,7 +203,7 @@ class GraphHelper:
     @classmethod
     def triple_or_quad_set(
         cls, graph: Graph, bnode_handling: BNodeHandling = BNodeHandling.COMPARE
-    ) -> Union[GHQuadfrozenset, GHTriplefrozenset]:
+    ) -> Union[GHQuadFrozenSet, GHTripleFrozenSet]:
         """
         Extracts quad or triple sets depending on whether or not the graph is
         ConjunctiveGraph or a normal Graph.
@@ -294,7 +294,7 @@ class GraphHelper:
     @classmethod
     def format_set(
         cls,
-        item_set: Union[GHQuadSet, GHQuadfrozenset, GHTripleSet, GHTriplefrozenset],
+        item_set: Union[GHQuadSet, GHQuadFrozenSet, GHTripleSet, GHTripleFrozenSet],
         indent: int = 1,
         sort: bool = False,
     ) -> str:
