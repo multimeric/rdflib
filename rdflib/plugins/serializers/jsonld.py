@@ -37,7 +37,7 @@ Example:
 from __future__ import annotations
 
 import warnings
-from typing import IO, Any, Dict, List, Optional
+from typing import IO, Any, Optional
 
 from rdflib.graph import DATASET_DEFAULT_GRAPH_ID, Graph, _ObjectType
 from rdflib.namespace import RDF, XSD
@@ -189,7 +189,7 @@ class Converter:
 
         context = self.context
 
-        objs: List[Any] = []
+        objs: list[Any] = []
         for g in graphs:
             obj = {}
             graphname = None
@@ -224,7 +224,7 @@ class Converter:
         return objs
 
     def from_graph(self, graph: Graph):
-        nodemap: Dict[Any, Any] = {}
+        nodemap: dict[Any, Any] = {}
 
         for s in set(graph.subjects()):
             ## only iri:s and unreferenced (rest will be promoted to top if needed)
@@ -265,7 +265,7 @@ class Converter:
         s: IdentifiedNode,
         p: IdentifiedNode,
         o: Identifier,
-        s_node: Dict[str, Any],
+        s_node: dict[str, Any],
         nodemap,
     ):
         context = self.context
@@ -362,7 +362,7 @@ class Converter:
             return None
 
     def to_raw_value(
-        self, graph: Graph, s: IdentifiedNode, o: Identifier, nodemap: Dict[str, Any]
+        self, graph: Graph, s: IdentifiedNode, o: Identifier, nodemap: dict[str, Any]
     ):
         context = self.context
         coll = self.to_collection(graph, o)
@@ -411,7 +411,7 @@ class Converter:
     def to_collection(self, graph: Graph, l_: Identifier):
         if l_ != RDF.nil and not graph.value(l_, RDF.first):
             return None
-        list_nodes: List[Optional[_ObjectType]] = []
+        list_nodes: list[Optional[_ObjectType]] = []
         chain = set([l_])
         while l_:
             if l_ == RDF.nil:

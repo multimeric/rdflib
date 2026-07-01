@@ -20,17 +20,12 @@ RDF operations performed on it.
 from __future__ import annotations
 
 import pickle
+from collections.abc import Generator, Iterable, Iterator, Mapping
 from io import BytesIO
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    Generator,
-    Iterable,
-    Iterator,
-    Mapping,
     Optional,
-    Tuple,
     Union,
 )
 
@@ -100,8 +95,8 @@ class TripleRemovedEvent(Event):
 
 class NodePickler:
     def __init__(self) -> None:
-        self._objects: Dict[str, Any] = {}
-        self._ids: Dict[Any, str] = {}
+        self._objects: dict[str, Any] = {}
+        self._ids: dict[Any, str] = {}
         self._get_object = self._objects.__getitem__
 
     def _get_ids(self, key: Any) -> Optional[str]:
@@ -287,7 +282,7 @@ class Store:
         triple: _TripleChoiceType,
         context: Optional[_ContextType] = None,
     ) -> Generator[
-        Tuple[
+        tuple[
             _TripleType,
             Iterator[Optional[_ContextType]],
         ],
@@ -347,7 +342,7 @@ class Store:
         self,
         triple_pattern: _TriplePatternType,
         context: Optional[_ContextType] = None,
-    ) -> Iterator[Tuple[_TripleType, Iterator[Optional[_ContextType]]]]:
+    ) -> Iterator[tuple[_TripleType, Iterator[Optional[_ContextType]]]]:
         """
         A generator over all the triples matching the pattern. Pattern can
         include any objects for used for comparing against nodes in the store,
@@ -449,7 +444,7 @@ class Store:
     def namespace(self, prefix: str) -> Optional[URIRef]:
         """ """
 
-    def namespaces(self) -> Iterator[Tuple[str, URIRef]]:
+    def namespaces(self) -> Iterator[tuple[str, URIRef]]:
         """ """
         # This is here so that the function becomes an empty generator.
         # See https://stackoverflow.com/q/13243766 and

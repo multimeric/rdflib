@@ -5,23 +5,18 @@ import itertools
 import logging
 import pathlib
 import re
-from contextlib import ExitStack, contextmanager
+from collections.abc import Collection, Generator, Iterable
+from contextlib import AbstractContextManager, ExitStack, contextmanager
 from dataclasses import dataclass
 from io import BytesIO, StringIO, TextIOWrapper
 from pathlib import Path
-from typing import (  # Callable,
+from typing import (
     IO,
     TYPE_CHECKING,
     BinaryIO,
-    Collection,
-    ContextManager,
-    Generator,
     Generic,
-    Iterable,
     Optional,
     TextIO,
-    Tuple,
-    Type,
     TypeVar,
     Union,
 )
@@ -288,12 +283,12 @@ class InputSourceChecker:
         encoding: Expected encoding of input source. If `None`, then the encoding is not checked. If it has a value (i.e. an instance of `Holder`), then the encoding is expected to match `encoding.value`.
     """
 
-    type: Type[InputSource]
+    type: type[InputSource]
     stream_check: StreamCheck
     encoding: Optional[Holder[Optional[str]]]
     public_id: Optional[str]
     system_id: Optional[str]
-    # extra_checks: List[Callable[[InputSource], None]] = field(factory=list)
+    # extra_checks: list[Callable[[InputSource], None]] = field(factory=list)
 
     def check(
         self,
@@ -353,7 +348,7 @@ class InputSourceChecker:
     @classmethod
     def type_from_param(
         cls, param: Union[SourceParam, FileParam, DataParam, LocationParam, enum.Enum]
-    ) -> Type[InputSource]:
+    ) -> type[InputSource]:
         """
         Return the type of input source that should be created for the given parameter.
 
@@ -381,10 +376,10 @@ class InputSourceChecker:
         raise ValueError(f"unknown param {param}")
 
 
-FileParamTypeCM = ContextManager[FileParamType]
+FileParamTypeCM = AbstractContextManager[FileParamType]
 
 
-CreateInputSourceTestParamsTuple = Tuple[
+CreateInputSourceTestParamstuple = tuple[
     Path,
     Optional[SourceParam],
     Optional[str],
@@ -414,7 +409,7 @@ class CreateInputSourceTestParams:
     format: Optional[str]
     expected_result: Union[ExceptionChecker, InputSourceChecker]
 
-    def as_tuple(self) -> CreateInputSourceTestParamsTuple:
+    def as_tuple(self) -> CreateInputSourceTestParamstuple:
         return (
             self.input_path,
             self.source_param,

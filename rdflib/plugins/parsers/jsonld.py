@@ -35,7 +35,8 @@ from __future__ import annotations
 
 import secrets
 import warnings
-from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Optional, Union
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import rdflib.parser
 from rdflib.graph import ConjunctiveGraph, Graph
@@ -91,8 +92,8 @@ class JsonLDParser(rdflib.parser.Parser):
         base: Optional[str] = None,
         context: Optional[
             Union[
-                List[Union[Dict[str, Any], str, None]],
-                Dict[str, Any],
+                list[Union[dict[str, Any], str, None]],
+                dict[str, Any],
                 str,
             ]
         ] = None,
@@ -177,8 +178,8 @@ def to_rdf(
     base: Optional[str] = None,
     context_data: Optional[
         Union[
-            List[Union[Dict[str, Any], str, None]],
-            Dict[str, Any],
+            list[Union[dict[str, Any], str, None]],
+            dict[str, Any],
             str,
         ]
     ] = None,
@@ -217,7 +218,7 @@ class Parser:
 
     def parse(self, data: Any, context: Context, dataset: Graph) -> Graph:
         topcontext = False
-        resources: Union[Dict[str, Any], List[Any]]
+        resources: Union[dict[str, Any], list[Any]]
         if isinstance(data, list):
             resources = data
         elif isinstance(data, dict):
@@ -226,7 +227,7 @@ class Parser:
                 context.load(local_context, context.base)
                 topcontext = True
             resources = data
-            # type error: Subclass of "Dict[str, Any]" and "List[Any]" cannot exist: would have incompatible method signatures
+            # type error: Subclass of "dict[str, Any]" and "list[Any]" cannot exist: would have incompatible method signatures
             if not isinstance(resources, list):  # type: ignore[unreachable]
                 resources = [resources]
 
@@ -308,7 +309,7 @@ class Parser:
         return subj
 
     # type error: Missing return statement
-    def _get_nested_id(self, context: Context, node: Dict[str, Any]) -> Optional[str]:  # type: ignore[return]
+    def _get_nested_id(self, context: Context, node: dict[str, Any]) -> Optional[str]:  # type: ignore[return]
         for key, obj in node.items():
             if context.version >= 1.1 and key in context.get_keys(NEST):
                 term = context.terms.get(key)
@@ -402,7 +403,7 @@ class Parser:
         context = context.get_context_for_term(term)
 
         # Flatten deep nested lists
-        def flatten(n: Iterable[Any]) -> List[Any]:
+        def flatten(n: Iterable[Any]) -> list[Any]:
             flattened = []
             for obj in n:
                 if isinstance(obj, dict):
@@ -444,8 +445,8 @@ class Parser:
                 graph.add((subj, pred, obj))
 
     def _parse_container(
-        self, context: Context, term: Term, obj: Dict[str, Any]
-    ) -> List[Any]:
+        self, context: Context, term: Term, obj: dict[str, Any]
+    ) -> list[Any]:
         if LANG in term.container:
             obj_nodes = []
             for lang, values in obj.items():
@@ -524,7 +525,7 @@ class Parser:
         return [obj]
 
     @staticmethod
-    def _add_type(context: Context, o: Dict[str, Any], k: str) -> Dict[str, Any]:
+    def _add_type(context: Context, o: dict[str, Any], k: str) -> dict[str, Any]:
         otype = context.get_type(o) or []
         if otype and not isinstance(otype, list):
             otype = [otype]
@@ -680,7 +681,7 @@ class Parser:
             return RDF.nil
 
     @staticmethod
-    def _to_typed_json_value(value: Any) -> Dict[str, str]:
+    def _to_typed_json_value(value: Any) -> dict[str, str]:
         if _HAS_ORJSON:
             val_string: str = orjson.dumps(
                 value,
@@ -696,7 +697,7 @@ class Parser:
         }
 
     @classmethod
-    def _expand_nested_list(cls, obj_nodes: List[Any]) -> Dict[str, List[Any]]:
+    def _expand_nested_list(cls, obj_nodes: list[Any]) -> dict[str, list[Any]]:
         result = [
             cls._expand_nested_list(o) if isinstance(o, list) else o for o in obj_nodes
         ]

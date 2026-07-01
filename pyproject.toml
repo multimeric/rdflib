@@ -11,8 +11,6 @@ license = "BSD-3-Clause"
 classifiers=[
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -65,7 +63,7 @@ coverage = {version = "^7.0.1", extras = ["toml"]}
 types-setuptools = ">=68.0.0.3,<72.0.0.0"
 setuptools = ">=68,<72"
 wheel = ">=0.42,<0.46"
-testcontainers = {version = "^4.13.2", python = ">=3.9.2"}
+testcontainers = {version = "^4.13.2"}
 
 [tool.poetry.group.docs.dependencies]
 typing-extensions = "^4.11.0"
@@ -97,7 +95,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 # https://beta.ruff.rs/docs/configuration/
-target-version = "py38"
+target-version = "py310"
 # Same as Black.
 line-length = 88
 
@@ -178,7 +176,7 @@ ignore = [
 
 [tool.black]
 line-length = 88
-target-version = ['py38']
+target-version = ['py310']
 required-version = "24.8.0"
 include = '\.pyi?$'
 exclude = '''
@@ -264,7 +262,7 @@ skip = [
 
 [tool.mypy]
 files = ['rdflib', 'test', 'devtools', 'examples']
-python_version = "3.8"
+python_version = "3.10"
 warn_unused_configs = true
 ignore_missing_imports = true
 disallow_subclassing_any = false

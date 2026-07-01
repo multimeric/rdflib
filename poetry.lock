@@ -2123,4 +2123,4 @@ rdf4j = ["httpx"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "17be580737da39a6e2cf62e1bd1d4fa8f8df56ec326834267c95c7eb311e22ab"
+content-hash = "fd3f88294d8bb9a396503d90c5ceac7fcb8f786b0d9561208851593525c8e03b"

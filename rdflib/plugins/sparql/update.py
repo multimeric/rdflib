@@ -4,7 +4,8 @@ Code for carrying out Update Operations
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Iterator, Mapping, Optional, Sequence
+from collections.abc import Iterator, Mapping, Sequence
+from typing import TYPE_CHECKING, Optional
 
 from rdflib.graph import Graph
 from rdflib.plugins.sparql.evaluate import evalBGP, evalPart
@@ -186,7 +187,7 @@ def evalModify(ctx: QueryContext, u: CompValue) -> None:
         dg = ctx.graph if type(ctx.graph) is Graph else ctx.dataset.default_context
         if u.delete:
             # type error: Unsupported left operand type for - ("None")
-            # type error: Unsupported operand types for - ("Graph" and "Generator[Tuple[Identifier, Identifier, Identifier], None, None]")
+            # type error: Unsupported operand types for - ("Graph" and "Generator[tuple[Identifier, Identifier, Identifier], None, None]")
             dg -= _fillTemplate(u.delete.triples, c)  # type: ignore[operator]
 
             for g, q in u.delete.quads.items():
@@ -195,7 +196,7 @@ def evalModify(ctx: QueryContext, u: CompValue) -> None:
 
         if u.insert:
             # type error: Unsupported left operand type for + ("None")
-            # type error: Unsupported operand types for + ("Graph" and "Generator[Tuple[Identifier, Identifier, Identifier], None, None]")
+            # type error: Unsupported operand types for + ("Graph" and "Generator[tuple[Identifier, Identifier, Identifier], None, None]")
             dg += _fillTemplate(u.insert.triples, c)  # type: ignore[operator]
 
             for g, q in u.insert.quads.items():

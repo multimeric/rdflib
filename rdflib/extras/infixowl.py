@@ -153,7 +153,8 @@ from __future__ import annotations
 
 import itertools
 import logging
-from typing import Iterable, Union
+from collections.abc import Iterable
+from typing import Union
 
 from rdflib.collection import Collection
 from rdflib.graph import Graph, _ObjectType
@@ -1358,7 +1359,7 @@ class Class(AnnotatableTerms):
         # sc = list(self.subClassOf)
         ec = list(self.equivalentClass)
         for _boolclass, p, rdf_list in self.graph.triples_choices(
-            # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "Tuple[Any, List[URIRef], None]"; expected "Union[Tuple[List[Node], Node, Node], Tuple[Node, List[Node], Node], Tuple[Node, Node, List[Node]]]"
+            # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "tuple[Any, list[URIRef], None]"; expected "Union[tuple[list[Node], Node, Node], tuple[Node, list[Node], Node], tuple[Node, Node, list[Node]]]"
             (self.identifier, [OWL.intersectionOf, OWL.unionOf], None)  # type: ignore[arg-type]
         ):
             ec.append(manchesterSyntax(rdf_list, self.graph, boolean=p))
@@ -1388,7 +1389,7 @@ class Class(AnnotatableTerms):
         sc = list(self.subClassOf)
         ec = list(self.equivalentClass)
         for _boolclass, p, rdf_list in self.graph.triples_choices(
-            # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "Tuple[Any, List[URIRef], None]"; expected "Union[Tuple[List[Node], Node, Node], Tuple[Node, List[Node], Node], Tuple[Node, Node, List[Node]]]"
+            # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "tuple[Any, list[URIRef], None]"; expected "Union[tuple[list[Node], Node, Node], tuple[Node, list[Node], Node], tuple[Node, Node, list[Node]]]"
             (self.identifier, [OWL.intersectionOf, OWL.unionOf], None)  # type: ignore[arg-type]
         ):
             ec.append(manchesterSyntax(rdf_list, self.graph, boolean=p))
@@ -1398,7 +1399,7 @@ class Class(AnnotatableTerms):
             dc.append(c)
         klasskind = ""
         label = list(self.graph.objects(self.identifier, RDFS.label))
-        # type error: Incompatible types in assignment (expression has type "str", variable has type "List[Node]")
+        # type error: Incompatible types in assignment (expression has type "str", variable has type "list[Node]")
         # type error: Unsupported operand types for + ("str" and "Node")
         label = label and "(" + label[0] + ")" or ""  # type: ignore[assignment, operator]
         if sc:
@@ -1512,13 +1513,13 @@ class OWLRDFListProxy:
         return self._rdfList.index(classOrIdentifier(item))
 
     def __getitem__(self, key):
-        return self._rdfList[key]
+        return self._rdflist[key]
 
     def __setitem__(self, key, value):
-        self._rdfList[key] = classOrIdentifier(value)
+        self._rdflist[key] = classOrIdentifier(value)
 
     def __delitem__(self, key):
-        del self._rdfList[key]
+        del self._rdflist[key]
 
     def clear(self):
         self._rdfList.clear()
@@ -2074,7 +2075,7 @@ class Restriction(Class):
 
     def restrictionKind(self):  # noqa: N802
         for s, p, o in self.graph.triples_choices(
-            # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "Tuple[Any, List[URIRef], None]"; expected "Union[Tuple[List[Node], Node, Node], Tuple[Node, List[Node], Node], Tuple[Node, Node, List[Node]]]"
+            # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "tuple[Any, list[URIRef], None]"; expected "Union[tuple[list[Node], Node, Node], tuple[Node, list[Node], Node], tuple[Node, Node, list[Node]]]"
             (self.identifier, self.restrictionKinds, None)  # type: ignore[arg-type]
         ):
             # type error: "Node" has no attribute "split"
@@ -2244,7 +2245,7 @@ class Property(AnnotatableTerms):
                     )
                 )
             for _s, _p, roletype in self.graph.triples_choices(
-                # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "Tuple[Any, URIRef, List[URIRef]]"; expected "Union[Tuple[List[Node], Node, Node], Tuple[Node, List[Node], Node], Tuple[Node, Node, List[Node]]]"
+                # type error: Argument 1 to "triples_choices" of "Graph" has incompatible type "tuple[Any, URIRef, list[URIRef]]"; expected "Union[tuple[list[Node], Node, Node], tuple[Node, list[Node], Node], tuple[Node, Node, list[Node]]]"
                 (  # type: ignore[arg-type]
                     self.identifier,
                     RDF.type,
@@ -2306,7 +2307,7 @@ class Property(AnnotatableTerms):
                 ]
             )
         )
-        # type error: Incompatible types in assignment (expression has type "str", variable has type "List[str]")
+        # type error: Incompatible types in assignment (expression has type "str", variable has type "list[str]")
         rt = "\n".join([expr for expr in rt if expr])  # type: ignore[assignment]
         rt += "\n)"
         return rt

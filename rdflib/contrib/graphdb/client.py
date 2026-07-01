@@ -63,13 +63,13 @@ FileContent = t.Union[
     bytes,
     str,
     t.IO[bytes],
-    t.Tuple[t.Optional[str], t.Union[bytes, str, t.IO[bytes]]],
-    t.Tuple[t.Optional[str], t.Union[bytes, str, t.IO[bytes]], t.Optional[str]],
+    t.tuple[t.Optional[str], t.Union[bytes, str, t.IO[bytes]]],
+    t.tuple[t.Optional[str], t.Union[bytes, str, t.IO[bytes]], t.Optional[str]],
 ]
 
 FilesType = t.Union[
     t.Mapping[str, FileContent],
-    t.Iterable[t.Tuple[str, FileContent]],
+    t.Iterable[t.tuple[str, FileContent]],
 ]
 
 _ALLOWED_FGAC_SCOPES = {"statement", "clear_graph", "plugin", "system"}
@@ -102,7 +102,7 @@ class AccessControlListManagement:
         plugin: str | None = None,
         role: str | None = None,
         policy: t.Literal["allow", "deny", "abstain"] | None = None,
-    ) -> t.List[
+    ) -> t.list[
         SystemAccessControlEntry
         | StatementAccessControlEntry
         | PluginAccessControlEntry
@@ -2880,7 +2880,7 @@ class UserManagement:
                 raise PreconditionFailedError("Precondition failed.") from err
             raise
 
-    def custom_roles(self, username: str) -> t.List[str]:
+    def custom_roles(self, username: str) -> t.list[str]:
         """
         Retrieve custom roles associated with the user.
 
