@@ -11,7 +11,7 @@ python test/test_roundtrip.py xml nt test/nt/literals-02.nt
 
 tests roundtripping through rdf/xml with only the literals-02 file
 
-Hextuples format, "hext", cannot be used in all roundtrips due to its
+HexTuples format, "hext", cannot be used in all roundtrips due to its
 addition of xsd:string to literals of no declared type as this breaks
 (rdflib) graph isomorphism, and given that its JSON serialization is
 simple (lacking), so hext has been excluded from roundtripping here
@@ -140,11 +140,11 @@ XFAILS = {
         raises=AssertionError,
     ),
     ("hext", "n3-writer-test-22.n3"): pytest.mark.xfail(
-        reason='Hextuples conflates "" and ""^^xsd:string strings',
+        reason='HexTuples conflates "" and ""^^xsd:string strings',
         raises=AssertionError,
     ),
     ("hext", "rdf-test-21.n3"): pytest.mark.xfail(
-        reason='Hextuples conflates "" and ""^^xsd:string strings',
+        reason='HexTuples conflates "" and ""^^xsd:string strings',
         raises=AssertionError,
     ),
     ("xml", "special_chars.nt"): pytest.mark.xfail(
