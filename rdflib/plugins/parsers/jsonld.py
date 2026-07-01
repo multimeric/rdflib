@@ -143,10 +143,10 @@ class JsonLDParser(rdflib.parser.Parser):
             version = 1.1
 
         # Get the optional fragment identifier
-        try:
-            fragment_id = URIRef(source.getSystemId()).fragment
-        except Exception:
+        if (_fragment_id := source.getSystemId()) is None:
             fragment_id = None
+        else:
+            fragment_id = URIRef(_fragment_id).fragment
 
         data, html_base = source_to_json(source, fragment_id, extract_all_scripts)
         if html_base is not None:
@@ -661,7 +661,7 @@ class Parser:
 
             if rest:
                 # type error: Statement is unreachable
-                graph.add((subj, RDF.rest, rest))  # type: ignore[unreachable]
+                graph.add((subj, RDF.rest, rest))
                 subj = rest
 
             obj = self._to_object(dataset, graph, context, term, node, inlist=True)

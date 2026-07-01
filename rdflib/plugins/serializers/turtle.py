@@ -16,7 +16,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    tuple,
 )
 
 from rdflib.exceptions import Error
@@ -80,7 +79,7 @@ class RecursiveSerializer(Serializer):
         for classURI in self.topClasses:
             members = list(self.store.subjects(RDF.type, classURI))
             # type error: All overload variants of "sort" of "list" require at least one argument
-            members.sort()  # type: ignore[call-overload]
+            members.sort()  # type: ignore[call-arg]
 
             subjects.extend(members)
             for member in members:
@@ -148,7 +147,7 @@ class RecursiveSerializer(Serializer):
         # Sort object lists
         for prop, objects in properties.items():
             # type error: All overload variants of "sort" of "list" require at least one argument
-            objects.sort()  # type: ignore[call-overload]
+            objects.sort()  # type: ignore[call-arg]
 
         # Make sorted list of properties
         propList: list[_PredicateType] = []
@@ -159,7 +158,7 @@ class RecursiveSerializer(Serializer):
                 seen[prop] = True
         props = list(properties.keys())
         # type error: All overload variants of "sort" of "list" require at least one argument
-        props.sort()  # type: ignore[call-overload]
+        props.sort()  # type: ignore[call-arg]
         for prop in props:
             if prop not in seen:
                 propList.append(prop)

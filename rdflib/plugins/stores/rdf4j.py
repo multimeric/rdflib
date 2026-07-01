@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Generator, Iterable, Iterator, Mapping
 from textwrap import dedent
-from typing import Any, Optional, tuple
+from typing import Any, Optional
 
 from rdflib import Graph
 from rdflib.contrib.rdf4j import has_httpx

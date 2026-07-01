@@ -312,7 +312,7 @@ def _create_epilog_from_format(format_, construct) -> Optional[str]:
             f"No plugin registered for sparql result in format '{format_}'. "
             f"available plugins: {available_plugins}"
         )
-    serialize_method = plugin.serialize  # type: ignore[attr-defined]
+    serialize_method = plugin.serialize
     module = inspect.getmodule(serialize_method)
     if module is None:
         return None

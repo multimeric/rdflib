@@ -4,7 +4,7 @@ A TriX parser for RDFLib
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, NoReturn, Optional, tuple
+from typing import TYPE_CHECKING, Any, NoReturn, Optional
 from xml.sax import handler, make_parser
 from xml.sax.handler import ErrorHandler
 
@@ -17,7 +17,7 @@ from rdflib.term import BNode, Identifier, Literal, URIRef
 
 if TYPE_CHECKING:
     # from xml.sax.expatreader import ExpatLocator
-    from xml.sax.xmlreader import AttributesImpl, Locator, XMLReader
+    from xml.sax.xmlreader import AttributesNSImpl, Locator, XMLReader
 
 __all__ = ["create_parser", "TriXHandler", "TriXParser"]
 
@@ -60,7 +60,7 @@ class TriXHandler(handler.ContentHandler):
         pass
 
     def startElementNS(
-        self, name: tuple[Optional[str], str], qname, attrs: AttributesImpl
+        self, name: tuple[Optional[str], str], qname, attrs: AttributesNSImpl
     ) -> None:
         if name[0] != str(TRIXNS):
             self.error(

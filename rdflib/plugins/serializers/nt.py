@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import codecs
 import warnings
-from typing import IO, TYPE_CHECKING, Any, Optional, Union, tuple
+from typing import IO, TYPE_CHECKING, Any, Optional, Union
 
 from rdflib.graph import Graph
 from rdflib.serializer import Serializer

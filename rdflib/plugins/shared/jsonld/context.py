@@ -12,7 +12,6 @@ from typing import (
     Any,
     Optional,
     Union,
-    tuple,
 )
 from urllib.parse import urljoin, urlsplit
 
@@ -74,7 +73,7 @@ class Context:
         version: Optional[float] = 1.1,
     ):
         self.version: float = version or 1.1
-        self.language = None
+        self.language: Optional[str] = None
         self.vocab: Optional[str] = None
         self._base: Optional[str]
         self.base = base
@@ -424,6 +423,7 @@ class Context:
         referenced_contexts: set[str],
         in_source_url: Optional[str] = None,
     ):
+        source: dict[str, Any] | str | None | list[Any]
         for source in inputs:
             source_url = in_source_url
             new_base = base
@@ -448,11 +448,11 @@ class Context:
                 if CONTEXT in source:
                     source = source[CONTEXT]
                     # type ignore: Incompatible types in assignment (expression has type "list[Union[dict[str, Any], str, None]]", variable has type "Union[dict[str, Any], str, None]")
-                    source = source if isinstance(source, list) else [source]  # type: ignore[assignment]
+                    source = source if isinstance(source, list) else [source]
 
             if isinstance(source, list):
                 # type error: Statement is unreachable
-                self._prep_sources(  # type: ignore[unreachable]
+                self._prep_sources(
                     new_base, source, sources, referenced_contexts, source_url
                 )
             else:
@@ -553,7 +553,7 @@ class Context:
 
             self.add_term(
                 name,
-                idref,
+                idref,  # type: ignore[arg-type]
                 coercion,
                 dfn.get(CONTAINER, UNDEF),
                 dfn.get(INDEX, UNDEF),
@@ -572,7 +572,7 @@ class Context:
             self.add_term(name, idref, protected=protected)  # type: ignore[arg-type]
 
         if idref in NODE_KEYS:
-            self._alias.setdefault(idref, []).append(name)
+            self._alias.setdefault(idref, []).append(name)  # type: ignore[arg-type]
         else:
             # undo aliases that may have been inherited from parent context
             for v in self._alias.values():

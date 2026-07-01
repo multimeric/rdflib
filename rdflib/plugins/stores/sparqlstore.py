@@ -14,7 +14,6 @@ from typing import (
     Optional,
     Union,
     overload,
-    tuple,
 )
 
 from rdflib.graph import DATASET_DEFAULT_GRAPH_ID, Graph
@@ -347,7 +346,7 @@ class SPARQLStore(SPARQLConnector, Store):
 
         if vars:
             if type(result) is tuple:
-                if result[0] == 401:
+                if result[0] == 401:  # type: ignore[unreachable]
                     raise ValueError(
                         "It looks like you need to authenticate with this SPARQL Store. HTTP unauthorized"
                     )

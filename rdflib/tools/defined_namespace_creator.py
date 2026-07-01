@@ -18,7 +18,7 @@ import datetime
 import keyword
 from collections.abc import Iterable
 from pathlib import Path
-from typing import TYPE_CHECKING, tuple
+from typing import TYPE_CHECKING
 
 from rdflib.graph import Graph
 from rdflib.namespace import DCTERMS, OWL, RDFS, SKOS

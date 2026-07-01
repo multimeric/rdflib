@@ -298,8 +298,12 @@ class Converter:
             elif term.language and o.language == term.language:  # type: ignore[attr-defined]
                 node = str(o)
             # type error: Right operand of "and" is never evaluated
-            elif context.language and (term.language is None and o.language is None):  # type: ignore[unreachable]
-                node = str(o)  # type: ignore[unreachable]
+            elif (
+                context.language
+                and isinstance(o, Literal)
+                and (term.language is None and o.language is None)
+            ):
+                node = str(o)
 
             if LIST in term.container:
                 node = [
@@ -323,6 +327,10 @@ class Converter:
 
         else:
             p_key = context.to_symbol(p)
+            if p_key is None:
+                raise ValueError(
+                    f"Predicate {p} is not in context and cannot be coerced to a symbol"
+                )
             # TODO: for coercing curies - quite clumsy; unify to_symbol and find_term?
             key_term = context.terms.get(p_key)
             if key_term and (key_term.type or key_term.container):
@@ -403,7 +411,7 @@ class Converter:
             elif o.language and o.language != context.language:
                 return {context.lang_key: o.language, context.value_key: v}
             # type error: Right operand of "and" is never evaluated
-            elif not context.active or context.language and not o.language:  # type: ignore[unreachable]
+            elif not context.active or context.language and not o.language:
                 return {context.value_key: v}
             else:
                 return v

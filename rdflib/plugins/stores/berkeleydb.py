@@ -10,7 +10,6 @@ from typing import (
     Any,
     Optional,
     Union,
-    tuple,
 )
 from urllib.request import pathname2url
 
@@ -781,7 +780,7 @@ def results_from_key_func(
 # TODO: Remove unused
 def readable_index(i: int) -> str:
     # type error: Unpacking a string is disallowed
-    s, p, o = "?" * 3  # type: ignore[misc]
+    s, p, o = "?" * 3  # type: ignore[str-unpack]
     if i & 1:
         s = "s"
     if i & 2:

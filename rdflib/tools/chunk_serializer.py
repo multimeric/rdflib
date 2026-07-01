@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Generator
 from contextlib import ExitStack, contextmanager
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO, Optional, tuple
+from typing import TYPE_CHECKING, BinaryIO, Optional
 
 from rdflib.graph import Graph
 from rdflib.plugins.serializers.nt import _nt_row

@@ -5,7 +5,7 @@ See <http://www.w3.org/TR/trig/> for syntax specification.
 
 from __future__ import annotations
 
-from typing import IO, TYPE_CHECKING, Any, Optional, Union, tuple
+from typing import IO, TYPE_CHECKING, Any, Optional, Union
 
 from rdflib.graph import ConjunctiveGraph, Graph
 from rdflib.plugins.serializers.turtle import TurtleSerializer

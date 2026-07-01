@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import xml.dom.minidom
 from collections.abc import Generator
-from typing import IO, Any, Optional, tuple
+from typing import IO, Any, Optional
 from xml.sax.saxutils import escape, quoteattr
 
 from rdflib.collection import Collection

@@ -124,11 +124,11 @@ class HextuplesParser(Parser):
             ds.remove_graph(ds_default)  # remove the original unused default graph
 
         try:
-            text_stream: Optional[TextIO] = source.getCharacterStream()
+            text_stream: Optional[TextIO] = source.getCharacterStream()  # type: ignore[assignment]
         except (AttributeError, LookupError):
             text_stream = None
         try:
-            binary_stream: Optional[BinaryIO] = source.getByteStream()
+            binary_stream: Optional[BinaryIO] = source.getByteStream()  # type: ignore[assignment]
         except (AttributeError, LookupError):
             binary_stream = None
 

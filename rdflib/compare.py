@@ -461,15 +461,15 @@ class _TripleCanonicalizer:
             experimental_score = set([c.key() for c in experimental])
             if last_coloring:
                 # type error: Statement is unreachable
-                generator = self._create_generator(  # type: ignore[unreachable]
+                generator = self._create_generator(
                     [last_coloring, experimental], generator
                 )
             last_coloring = experimental
-            if best_score is None or best_score < color_score:  # type: ignore[unreachable]
+            if best_score is None or best_score < color_score:
                 best = [refined_coloring]
                 best_score = color_score
                 best_experimental_score = experimental_score
-            elif best_score > color_score:  # type: ignore[unreachable]
+            elif best_score > color_score:
                 # prune this branch.
                 if stats is not None and isinstance(stats["prunings"], int):
                     stats["prunings"] += 1
@@ -487,7 +487,7 @@ class _TripleCanonicalizer:
                 d = [depth[0]]
                 new_color = self._traces(coloring, stats=stats, depth=d)
                 color_score = tuple([c.key() for c in refined_coloring])
-                if best_score is None or color_score > best_score:  # type: ignore[unreachable]
+                if best_score is None or color_score > best_score:
                     discrete = [new_color]
                     best_score = color_score
                     best_depth = d[0]

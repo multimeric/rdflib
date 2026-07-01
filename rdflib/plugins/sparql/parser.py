@@ -44,11 +44,11 @@ def neg(literal: rdflib.Literal) -> rdflib.Literal:
     return rdflib.Literal(-literal, datatype=literal.datatype)
 
 
-def setLanguage(terms: tuple[Any, Optional[type[str]]]) -> rdflib.Literal:
+def setLanguage(terms: tuple[Any, str | None]) -> rdflib.Literal:
     return rdflib.Literal(terms[0], lang=terms[1])
 
 
-def setDataType(terms: tuple[Any, Optional[type[str]]]) -> rdflib.Literal:
+def setDataType(terms: tuple[Any, str | None]) -> rdflib.Literal:
     return rdflib.Literal(terms[0], datatype=terms[1])
 
 

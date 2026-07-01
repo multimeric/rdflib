@@ -9,7 +9,6 @@ from typing import (
     Optional,
     Union,
     overload,
-    tuple,
 )
 
 from rdflib.store import Store

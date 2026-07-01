@@ -34,7 +34,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    tuple,
 )
 
 from pyparsing import ParserElement, ParseResults, TokenConverter

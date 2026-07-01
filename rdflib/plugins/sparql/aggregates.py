@@ -12,7 +12,6 @@ from typing import (
     TypeVar,
     Union,
     overload,
-    tuple,
 )
 
 from rdflib.namespace import XSD

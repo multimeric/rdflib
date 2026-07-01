@@ -23,7 +23,6 @@ from typing import (
     TextIO,
     Union,
     cast,
-    tuple,
 )
 from xml.dom import XML_NAMESPACE
 from xml.sax.saxutils import XMLGenerator
@@ -70,7 +69,7 @@ class XMLResult(Result):
         if FOUND_LXML:
             lxml_parser = lxml_etree.XMLParser(huge_tree=True, encoding=parser_encoding)
             tree = cast(
-                xml_etree.ElementTree,
+                xml_etree.ElementTree[xml_etree.Element],
                 lxml_etree.parse(source, parser=lxml_parser),
             )
         else:

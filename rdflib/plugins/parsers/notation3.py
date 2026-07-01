@@ -35,7 +35,6 @@ import re
 import sys
 
 # importing typing for `typing.List` because `List`` is used for something else
-import typing
 from collections.abc import Callable, MutableSequence
 from decimal import Decimal
 from re import Match, Pattern
@@ -47,7 +46,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    tuple,
 )
 from uuid import uuid4
 
@@ -591,7 +589,7 @@ class SinkParser:
         j = self.skipSpace(argstr, i)
         if j < 0:
             return j  # eof
-        res: typing.list[str] = []
+        res: list[str] = []
 
         j = self.tok("bind", argstr, i)  # implied "#". Obsolete.
         if j > 0:
@@ -640,7 +638,7 @@ class SinkParser:
 
         j = self.tok("prefix", argstr, i, colon=True)  # no implied "#"
         if j >= 0:
-            t: typing.list[Union[Identifier, tuple[str, str]]] = []
+            t: list[Union[Identifier, tuple[str, str]]] = []
             i = self.qname(argstr, j, t)
             if i < 0:
                 self.BadSyntax(argstr, j, "expected qname after @prefix")
@@ -699,7 +697,7 @@ class SinkParser:
 
         j = self.sparqlTok("PREFIX", argstr, i)
         if j >= 0:
-            t: typing.list[Any] = []
+            t: list[Any] = []
             i = self.qname(argstr, j, t)
             if i < 0:
                 self.BadSyntax(argstr, j, "expected qname after @prefix")
@@ -756,7 +754,7 @@ class SinkParser:
         else:
             self._store.bind(qn, uri)
 
-    def setKeywords(self, k: Optional[typing.list[str]]) -> None:
+    def setKeywords(self, k: Optional[list[str]]) -> None:
         """Takes a list of strings"""
         if k is None:
             self.keywordsSet = 0
@@ -779,7 +777,7 @@ class SinkParser:
         self._store.makeStatement(quadruple, why=self._reason2)
 
     def statement(self, argstr: str, i: int) -> int:
-        r: typing.list[Any] = []
+        r: list[Any] = []
         i = self.object(argstr, i, r)  # Allow literal for subject - extends RDF
         if i < 0:
             return i
@@ -807,7 +805,7 @@ class SinkParser:
         if j < 0:
             return j  # eof
 
-        r: typing.list[Any] = []
+        r: list[Any] = []
 
         j = self.tok("has", argstr, i)
         if j >= 0:
@@ -949,7 +947,7 @@ class SinkParser:
                         argstr, j, "Found '[=' or '[ =' when in turtle mode."
                     )
                 i = j + 1
-                objs: typing.list[Node] = []
+                objs: list[Node] = []
                 j = self.objectList(argstr, i, objs)
                 if j >= 0:
                     subj = objs[0]
@@ -1010,7 +1008,7 @@ class SinkParser:
                     else:
                         first_run = False
 
-                    item: typing.list[Any] = []
+                    item: list[Any] = []
                     j = self.item(argstr, i, item)  # @@@@@ should be path, was object
                     if j < 0:
                         self.BadSyntax(argstr, i, "expected item in set or '$}'")
@@ -1062,7 +1060,7 @@ class SinkParser:
 
         if ch == "(":
             thing_type: Callable[
-                [typing.list[Any], Optional[Formula]], Union[set[Any], IdentifiedNode]
+                [list[Any], Optional[Formula]], Union[set[Any], IdentifiedNode]
             ]
             thing_type = self._store.newList
             ch2 = argstr[i + 1]
@@ -1133,19 +1131,19 @@ class SinkParser:
                 if self.turtle:
                     self.BadSyntax(argstr, j, "Found in ':-' in Turtle mode")
                 i = j + 2
-                res: typing.list[Any] = []
+                res: list[Any] = []
                 j = self.node(argstr, i, res, subj)
                 if j < 0:
                     self.BadSyntax(argstr, i, "bad {} or () or [] node after :- ")
                 i = j
                 continue
             i = j
-            v: typing.list[Any] = []
+            v: list[Any] = []
             j = self.verb(argstr, i, v)
             if j <= 0:
                 return i  # void but valid
 
-            objs: typing.list[Any] = []
+            objs: list[Any] = []
             i = self.objectList(argstr, j, objs)
             if i < 0:
                 self.BadSyntax(argstr, j, "objectList expected")
@@ -1229,7 +1227,7 @@ class SinkParser:
         NS and local name is now used though I prefer inserting a '#'
         to make the namesapces look more like what XML folks expect.
         """
-        qn: typing.list[Any] = []
+        qn: list[Any] = []
         j = self.qname(argstr, i, qn)
         if j >= 0:
             pfx, ln = qn[0]
@@ -1256,7 +1254,7 @@ class SinkParser:
             return -1
 
         if argstr[i] == "?":
-            v: typing.list[Any] = []
+            v: list[Any] = []
             j = self.variable(argstr, i, v)
             if j > 0:  # Forget variables as a class, only in context.
                 res.append(v[0])
@@ -1580,7 +1578,7 @@ class SinkParser:
                     lang = argstr[j + 1 : i]
                     j = i
                 if argstr[j : j + 2] == "^^":
-                    res2: typing.list[Any] = []
+                    res2: list[Any] = []
                     j = self.uri_ref2(argstr, j + 2, res2)  # Read datatype URI
                     dt = res2[0]
                 res.append(self._store.newLiteral(s, dt, lang))
@@ -1867,7 +1865,7 @@ class RDFSink:
         else:
             return Literal(s, lang=lang)
 
-    def newList(self, n: typing.list[Any], f: Optional[Formula]) -> IdentifiedNode:
+    def newList(self, n: list[Any], f: Optional[Formula]) -> IdentifiedNode:
         nil = self.newSymbol("http://www.w3.org/1999/02/22-rdf-syntax-ns#nil")
         if not n:
             return nil
@@ -2026,8 +2024,8 @@ class TurtleParser(Parser):
         # N3 parser prefers str stream
         stream = source.getCharacterStream()
         if not stream:
-            stream = source.getByteStream()
-        p.loadStream(stream)
+            stream = source.getByteStream()  # type: ignore[assignment]
+        p.loadStream(stream)  # type: ignore[arg-type]
 
         for prefix, namespace in p._bindings.items():
             graph.bind(prefix, namespace)

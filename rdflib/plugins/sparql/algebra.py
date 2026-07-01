@@ -16,7 +16,6 @@ from typing import (
     Any,
     Optional,
     overload,
-    tuple,
 )
 
 from pyparsing import ParseResults
@@ -153,7 +152,7 @@ def reorderTriples(
         t = l_[i][0][0]  # type: ignore[assignment] # top block has this many terms bound
         j = 0
         while i + j < len(l_) and l_[i + j][0][0] == t:
-            for c in l_[i + j][1]:
+            for c in l_[i + j][1]:  # type: ignore[unreachable]
                 _addvar(c, varsknown)
             j += 1
         i += 1

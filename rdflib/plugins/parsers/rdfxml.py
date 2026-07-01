@@ -4,7 +4,7 @@ An RDF/XML parser for RDFLib
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, NoReturn, Optional, tuple
+from typing import TYPE_CHECKING, Any, NoReturn, Optional
 from urllib.parse import urldefrag, urljoin
 from xml.sax import handler, make_parser, xmlreader
 from xml.sax.handler import ErrorHandler
@@ -15,11 +15,11 @@ from rdflib.graph import Graph
 from rdflib.namespace import RDF, is_ncname
 from rdflib.parser import InputSource, Parser
 from rdflib.plugins.parsers.RDFVOC import RDFVOC
-from rdflib.term import BNode, Identifier, Literal, URIRef
+from rdflib.term import BNode, IdentifiedNode, Identifier, Literal, URIRef
 
 if TYPE_CHECKING:
     # from xml.sax.expatreader import ExpatLocator
-    from xml.sax.xmlreader import AttributesImpl, Locator
+    from xml.sax.xmlreader import AttributesImpl, AttributesNSImpl, Locator
 
     from rdflib.graph import _ObjectType, _SubjectType, _TripleType
 
@@ -137,6 +137,8 @@ class ElementHandler:
 
 
 class RDFXMLHandler(handler.ContentHandler):
+    parenlist: IdentifiedNode
+
     def __init__(self, store: Graph):
         self.store = store
         self.preserve_bnode_ids = False
@@ -175,7 +177,7 @@ class RDFXMLHandler(handler.ContentHandler):
         del self._ns_contexts[-1]
 
     def startElementNS(
-        self, name: tuple[Optional[str], str], qname, attrs: AttributesImpl
+        self, name: tuple[Optional[str], str], qname, attrs: AttributesNSImpl
     ) -> None:
         stack = self.stack
         stack.append(ElementHandler())
@@ -414,7 +416,6 @@ class RDFXMLHandler(handler.ContentHandler):
         next = getattr(self, "next")
         object: Optional[_ObjectType] = None
         current.data = None
-        current.list = None
 
         # type error: "tuple[str, str]" has no attribute "startswith"
         if not name.startswith(str(RDFNS)):  # type: ignore[attr-defined]
@@ -472,7 +473,7 @@ class RDFXMLHandler(handler.ContentHandler):
                     next.end = self.property_element_end
                 elif parse_type == "Collection":
                     current.char = None
-                    object = current.list = RDF.nil  # BNode()
+                    object = self.parenlist = RDF.nil  # BNode()
                     # self.parent.subject
                     next.start = self.node_element_start
                     next.end = self.list_node_element_end
@@ -543,7 +544,7 @@ class RDFXMLHandler(handler.ContentHandler):
             current.data = None
         if self.next.end == self.list_node_element_end:
             if current.object != RDF.nil:
-                self.store.add((current.list, RDF.rest, RDF.nil))
+                self.store.add((self.parenlist, RDF.rest, RDF.nil))
         if current.object is not None:
             self.store.add((self.parent.subject, current.predicate, current.object))
             if current.id is not None:
@@ -554,21 +555,21 @@ class RDFXMLHandler(handler.ContentHandler):
 
     def list_node_element_end(self, name: tuple[str, str], qname) -> None:
         current = self.current
-        if self.parent.list == RDF.nil:
+        if self.parenlist == RDF.nil:
             list = BNode()
             # Removed between 20030123 and 20030905
             # self.store.add((list, RDF.type, LIST))
-            self.parent.list = list
-            self.store.add((self.parent.list, RDF.first, current.subject))
+            self.parenlist = list
+            self.store.add((self.parenlist, RDF.first, current.subject))
             self.parent.object = list
             self.parent.char = None
         else:
             list = BNode()
             # Removed between 20030123 and 20030905
             # self.store.add((list, RDF.type, LIST))
-            self.store.add((self.parent.list, RDF.rest, list))
+            self.store.add((self.parenlist, RDF.rest, list))
             self.store.add((list, RDF.first, current.subject))
-            self.parent.list = list
+            self.parenlist = list
 
     def literal_element_start(
         self, name: tuple[str, str], qname, attrs: AttributesImpl

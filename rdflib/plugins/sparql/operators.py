@@ -18,7 +18,7 @@ import warnings
 from collections.abc import Callable
 from decimal import ROUND_HALF_DOWN, ROUND_HALF_UP, Decimal, InvalidOperation
 from functools import reduce
-from typing import Any, NoReturn, Optional, Union, overload, tuple
+from typing import Any, NoReturn, Optional, Union, overload
 from urllib.parse import quote
 
 from pyparsing import ParseResults

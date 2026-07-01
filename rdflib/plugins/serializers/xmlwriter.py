@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import codecs
 from collections.abc import Iterable
-from typing import IO, TYPE_CHECKING, Optional, tuple
+from typing import IO, TYPE_CHECKING, Optional
 from xml.sax.saxutils import escape, quoteattr
 
 from rdflib.term import URIRef

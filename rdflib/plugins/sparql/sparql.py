@@ -11,7 +11,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    tuple,
 )
 
 import rdflib.plugins.sparql

@@ -24,7 +24,6 @@ from typing import (
     Any,
     Optional,
     Union,
-    tuple,
 )
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -377,7 +376,7 @@ def evalServiceQuery(ctx: QueryContext, part: CompValue):
             if len(res) > 0:
                 for r in res:
                     # type error: Argument 2 to "_yieldBindingsFromServiceCallResult" has incompatible type "str"; expected "dict[str, dict[str, str]]"
-                    for bound in _yieldBindingsFromServiceCallResult(ctx, r, variables):  # type: ignore[arg-type]
+                    for bound in _yieldBindingsFromServiceCallResult(ctx, r, variables):
                         yield bound
         else:
             raise Exception(

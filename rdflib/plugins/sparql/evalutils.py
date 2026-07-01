@@ -7,7 +7,6 @@ from typing import (
     TypeVar,
     Union,
     overload,
-    tuple,
 )
 
 from rdflib.plugins.sparql.operators import EBV

@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import threading
 from collections.abc import Generator, Iterator
-from typing import TYPE_CHECKING, Any, Optional, Union, tuple
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from rdflib.graph import ConjunctiveGraph, Graph
 from rdflib.store import Store
