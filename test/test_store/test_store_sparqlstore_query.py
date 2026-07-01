@@ -3,7 +3,7 @@ from __future__ import annotations
 import itertools
 import logging
 from collections.abc import Iterable
-from typing import Optional, tuple
+from typing import Optional
 
 import pytest
 from _pytest.mark.structures import ParameterSet

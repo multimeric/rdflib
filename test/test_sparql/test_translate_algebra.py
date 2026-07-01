@@ -6,7 +6,7 @@ from collections.abc import Collection
 from dataclasses import dataclass, field
 from io import StringIO
 from pathlib import Path
-from typing import Union, cast, tuple
+from typing import Union, cast
 
 import pytest
 from _pytest.mark.structures import Mark, MarkDecorator, ParameterSet

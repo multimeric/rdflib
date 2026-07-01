@@ -35,10 +35,10 @@ __all__ = ["file_uri_to_path"]
 
 
 def get_unique_plugins(
-    type: type[PluginT],
+    _type: type[PluginT],
 ) -> dict[type[PluginT], set[Plugin[PluginT]]]:
     result: dict[type[PluginT], set[Plugin[PluginT]]] = {}
-    for plugin in rdflib.plugin.plugins(None, type):
+    for plugin in rdflib.plugin.plugins(None, _type):
         cls = plugin.getClass()
         plugins = result.setdefault(cls, set())
         plugins.add(plugin)

@@ -3,7 +3,7 @@ from __future__ import annotations
 import itertools
 import json
 import re
-from typing import Any, tuple
+from typing import Any
 
 import pytest
 

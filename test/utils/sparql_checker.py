@@ -10,7 +10,7 @@ from collections.abc import Generator
 from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass, field
 from io import BytesIO, StringIO
-from typing import Optional, Union, cast, tuple
+from typing import Optional, Union, cast
 from urllib.parse import urljoin
 
 import pytest

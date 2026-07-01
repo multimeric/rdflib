@@ -19,8 +19,6 @@
 # mypy: warn_return_any, no_implicit_reexport, strict_equality
 from __future__ import annotations
 
-from typing import tuple
-
 import rdflib
 
 # TODO Bug - rdflib.plugins.sparql.prepareQuery() will run fine if this

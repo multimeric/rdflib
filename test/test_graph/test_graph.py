@@ -4,7 +4,7 @@ import logging
 import os
 from collections.abc import Callable
 from pathlib import Path
-from typing import Optional, tuple
+from typing import Optional
 from urllib.error import HTTPError, URLError
 
 import pytest

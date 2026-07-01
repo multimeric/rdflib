@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Mapping
 from contextlib import ExitStack
-from typing import TYPE_CHECKING, Any, Optional, Union, tuple
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import pytest
 

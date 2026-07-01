@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import builtins
 import logging
 from collections.abc import Callable, Collection, Generator, Iterable, Mapping
 from dataclasses import dataclass, field
@@ -7,7 +8,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    tuple,
 )
 from urllib.parse import urljoin
 
@@ -79,7 +79,7 @@ class ManifestEntry:
         return pytest.param(self, id=f"{self.identifier}", marks=marks)
 
     def value(
-        self, predicate: Identifier, value_type: type[IdentifierT]
+        self, predicate: Identifier, value_type: builtins.type[IdentifierT]
     ) -> Optional[IdentifierT]:
         value = self.graph.value(self.identifier, predicate)
         if value is not None:

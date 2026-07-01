@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Iterable
-from typing import Namedtuple, Optional, Union, cast, tuple
+from typing import NamedTuple, Optional, Union, cast
 
 from rdflib import RDF, RDFS, Graph
 from rdflib.term import Identifier, Node, URIRef
@@ -16,7 +16,7 @@ ResultType = Union[
 GraphDataType = Union[list[Optional[Node]], list[tuple[Optional[Node], Optional[Node]]]]
 
 
-class RDFTest(Namedtuple):
+class RDFTest(NamedTuple):
     uri: URIRef
     name: str
     comment: str
@@ -160,12 +160,13 @@ def read_manifest(f, base=None, legacy=False) -> Iterable[tuple[Node, Node, RDFT
                         RDFT.TestTrigEval,
                         RDFT.TestTrixEval,
                     )
-
                 else:
                     logger.debug(f"Don't know {_type}")
-                    pass
                     print("I dont know DAWG Test Type %s" % _type)
                     continue
+
+                if _type is None:
+                    raise ValueError(f"Test type is None for test {e} with name {name}")
 
                 assert isinstance(e, URIRef)
 

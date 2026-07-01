@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import math
 import sys
-from typing import tuple
 
 from rdflib import Graph, Literal
 from rdflib.namespace import Namespace

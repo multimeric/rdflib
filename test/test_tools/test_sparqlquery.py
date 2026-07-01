@@ -7,7 +7,6 @@ import subprocess
 import sys
 import tempfile
 from collections.abc import Iterable
-from typing import tuple
 
 import pytest
 

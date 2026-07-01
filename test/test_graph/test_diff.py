@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Collection
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Union, cast, tuple
+from typing import TYPE_CHECKING, Union, cast
 
 import pytest
 from _pytest.mark.structures import ParameterSet

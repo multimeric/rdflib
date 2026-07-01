@@ -17,7 +17,6 @@
 from __future__ import annotations
 
 import logging
-from typing import tuple
 
 from rdflib import Graph, URIRef
 from rdflib.query import ResultRow

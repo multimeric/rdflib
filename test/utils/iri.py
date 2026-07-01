@@ -12,10 +12,12 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from nturl2path import url2pathname as nt_url2pathname
 from pathlib import Path, PurePath, PurePosixPath, PureWindowsPath
-from typing import Optional, TypeVar, Union, tuple
+from typing import Optional, TypeVar, Union
 from urllib.parse import quote, unquote, urljoin, urlparse, urlsplit, urlunsplit
 from urllib.request import BaseHandler, OpenerDirector, Request
 from urllib.response import addinfourl
+
+from typing_extensions import Self
 
 from test.utils import ensure_suffix
 
@@ -96,7 +98,7 @@ def rebase_url(old_url: str, old_base: str, new_base: str) -> str:
     return new_url
 
 
-URIMappingtupleType = tuple[str, str]
+URIMappingTupleType = tuple[str, str]
 
 
 @dataclass(frozen=True)
@@ -105,7 +107,7 @@ class URIMapping:
     local: str
 
     @classmethod
-    def from_tuple(cls, value: URIMappingtupleType) -> URIMapping:
+    def from_tuple(cls, value: URIMappingTupleType) -> Self:
         return cls(value[0], value[1])
 
 
@@ -150,7 +152,7 @@ class URIMapper:
 
     @classmethod
     def from_mappings(
-        cls, *values: Union[URIMapping, URIMappingtupleType]
+        cls, *values: Union[URIMapping, URIMappingTupleType]
     ) -> URIMapper:
         result = set()
         for value in values:

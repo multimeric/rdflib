@@ -9,7 +9,7 @@ import enum
 import itertools
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
-from typing import Union, tuple
+from typing import Union
 
 import pytest
 from _pytest.mark.structures import Mark, MarkDecorator, ParameterSet

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import builtins
 import enum
 import itertools
 import logging
@@ -310,7 +311,8 @@ class InputSourceChecker:
             assert isinstance(input_source, self.type)
 
         if self.stream_check is StreamCheck.BYTE:
-            binary_io: BinaryIO = input_source.getByteStream()
+            binary_io = input_source.getByteStream()
+            assert binary_io is not None
             if params.data_param is DataParam.STRING:
                 assert (
                     binary_io.read() == input_path.read_text(encoding="utf-8").encode()
@@ -318,7 +320,8 @@ class InputSourceChecker:
             else:
                 assert binary_io.read() == input_path.read_bytes()
         elif self.stream_check is StreamCheck.CHAR:
-            text_io: TextIO = input_source.getCharacterStream()
+            text_io = input_source.getCharacterStream()
+            assert text_io is not None
             assert text_io.read() == input_path.read_text(encoding="utf-8")
         elif self.stream_check is StreamCheck.GRAPH:
             graph = Graph()
@@ -348,7 +351,7 @@ class InputSourceChecker:
     @classmethod
     def type_from_param(
         cls, param: Union[SourceParam, FileParam, DataParam, LocationParam, enum.Enum]
-    ) -> type[InputSource]:
+    ) -> builtins.type[InputSource]:
         """
         Return the type of input source that should be created for the given parameter.
 

@@ -4,7 +4,7 @@ from collections import defaultdict
 from collections.abc import Callable, Generator
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from typing import Any, tuple
+from typing import Any
 
 AuditHookType = Callable[[str, tuple[Any, ...]], Any]
 

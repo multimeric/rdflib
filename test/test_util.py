@@ -5,7 +5,7 @@ import time
 from collections.abc import Collection
 from contextlib import ExitStack
 from pathlib import Path
-from typing import Any, Optional, Union, tuple
+from typing import Any, Optional, Union
 
 import pytest
 

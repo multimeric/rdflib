@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from runpy import run_path
-from typing import Any, Optional, Union, tuple
+from typing import Any, Optional, Union
 
 import rdflib.util
 import test.data

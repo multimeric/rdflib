@@ -16,7 +16,6 @@ from typing import (
     TextIO,
     Union,
     cast,
-    tuple,
 )
 from urllib.parse import urlsplit, urlunsplit
 

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import builtins
 import enum
 import logging
 import pprint
 from collections.abc import Collection, Mapping
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Optional, Union, frozenset, tuple
+from typing import Optional, Union
 
 from rdflib.term import BNode, Identifier, Literal, Variable
 
@@ -266,7 +267,7 @@ class ResultFormat(str, enum.Enum):
 
     @classmethod
     @lru_cache(maxsize=None)
-    def info_set(cls) -> set[ResultFormatInfo]:
+    def info_set(cls) -> builtins.set[ResultFormatInfo]:
         return {format.info for format in cls.set()}
 
 

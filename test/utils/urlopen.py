@@ -14,4 +14,4 @@ def context_urlopener(opener: OpenerDirector) -> Generator[OpenerDirector, None,
         install_opener(opener)
         yield opener
     finally:
-        install_opener(old_opener)  # type: ignore[arg-type]
+        install_opener(old_opener)

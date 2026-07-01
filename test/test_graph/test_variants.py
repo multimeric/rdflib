@@ -11,13 +11,7 @@ from collections.abc import Collection, Iterable
 from dataclasses import dataclass, field
 from pathlib import Path, PurePath
 from re import Pattern
-from typing import (
-    ClassVar,
-    Optional,
-    Union,
-    cast,
-    tuple,
-)
+from typing import ClassVar, Optional, Union, cast
 
 import pytest
 from _pytest.mark.structures import Mark, MarkDecorator, ParameterSet

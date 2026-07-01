@@ -9,11 +9,10 @@ from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
 from typing import (
-    Namedtuple,
+    NamedTuple,
     Optional,
     TypeVar,
     Union,
-    tuple,
 )
 from urllib.parse import ParseResult
 
@@ -53,7 +52,7 @@ class MethodName(str, enum.Enum):
     TRACE = enum.auto()
 
 
-class MockHTTPRequest(Namedtuple):
+class MockHTTPRequest(NamedTuple):
     method: MethodName
     path: str
     parsed_path: ParseResult
@@ -70,7 +69,7 @@ This object should be equal to any `MockHTTPRequest` object.
 """
 
 
-class MockHTTPResponse(Namedtuple):
+class MockHTTPResponse(NamedTuple):
     status_code: int
     reason_phrase: str
     body: bytes

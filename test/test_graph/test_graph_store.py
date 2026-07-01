@@ -12,7 +12,6 @@ from typing import (
     Any,
     Optional,
     Union,
-    tuple,
 )
 from unittest.mock import patch
 

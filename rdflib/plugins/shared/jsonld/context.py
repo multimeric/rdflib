@@ -572,7 +572,7 @@ class Context:
             self.add_term(name, idref, protected=protected)  # type: ignore[arg-type]
 
         if idref in NODE_KEYS:
-            self._alias.setdefault(idref, []).append(name)  # type: ignore[arg-type]
+            self._alias.setdefault(idref, []).append(name)
         else:
             # undo aliases that may have been inherited from parent context
             for v in self._alias.values():

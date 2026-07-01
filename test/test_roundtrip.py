@@ -27,7 +27,7 @@ import logging
 import os.path
 from collections.abc import Callable, Iterable
 from pathlib import Path
-from typing import Optional, Union, tuple
+from typing import Optional, Union
 from xml.sax import SAXParseException
 
 import pytest

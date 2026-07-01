@@ -9,7 +9,6 @@ import itertools
 import logging
 import re
 from collections.abc import Callable, Iterable
-from typing import tuple
 
 import pytest
 
