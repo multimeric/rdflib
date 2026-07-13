@@ -30,6 +30,14 @@ jobs:
         # version and OS.
         suffix: [""]
         include:
+          - python-version: "3.11"
+            os: ubuntu-latest
+            extensive-tests: true
+          - python-version: "3.11"
+            os: ubuntu-latest
+            extensive-tests: true
+            suffix: "-min"
+            TOXENV_SUFFIX: "-min"
           - python-version: "3.10"
             os: ubuntu-latest
             TOX_EXTRA_COMMAND: "- black --check --diff ./rdflib"
