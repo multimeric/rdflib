@@ -159,7 +159,7 @@ def rdf2dot(g: Graph, stream: TextIO, opts: dict[str, Any] = {}):
         stream.write(
             opstr
             # type error: Value of type variable "AnyStr" of "escape" cannot be "Node"
-            % (n, NODECOLOR, html.escape(label(u, g)), u, html.escape(u), "".join(f))  # type: ignore[type-var]
+            % (n, NODECOLOR, html.escape(label(u, g)), u, html.escape(u), "".join(f))  # type: ignore[arg-type]
         )
 
     stream.write("}\n")
