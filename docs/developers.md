@@ -237,13 +237,13 @@ tox
 tox -a
 
 # Run a specific environment.
-tox -e py39 # default environment with py39
+tox -e py311 # default environment with py311
 tox -e py311-extra # extra tests with py311
 
 # Override the test command.
 # the below command will run `pytest test/test_translate_algebra.py`
 # instead of the default pytest command.
-tox -e py39,py311 -- pytest test/test_translate_algebra.py
+tox -e py310,py311 -- pytest test/test_translate_algebra.py
 ```
 
 ## `go-task` and `Taskfile.yml`
@@ -335,6 +335,7 @@ If you make a pull-request to RDFLib on GitHub, GitHub Actions will automaticall
 Please do *not* commit tests you know will fail, even if you're just pointing out a bug. If you commit such tests, flag them as expecting to fail.
 
 ## Compatibility
+RDFlib 7.7.0 release and later only support Python 3.10.0 and newer.
 
 RDFlib 7.0.0 release and later only support Python 3.8.1 and newer.
 
