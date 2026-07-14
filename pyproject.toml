@@ -18,6 +18,11 @@ classifiers=[
 ]
 license = "BSD-3-Clause"
 readme = "README.md"
+dependencies = [
+    "isodate>=0.7.2,<1.0.0",
+    "pyparsing>=2.1.0,<4"
+]
+requires-python = ">=3.10"
 
 [[project.authors]]
 name = "Daniel 'eikeon' Krech"
@@ -31,6 +36,23 @@ email = "rdflib-dev@googlegroups.com"
 repository = "https://github.com/RDFLib/rdflib"
 documentation = "https://rdflib.readthedocs.org/"
 
+[project.scripts]
+rdfpipe = 'rdflib.tools.rdfpipe:main'
+csv2rdf = 'rdflib.tools.csv2rdf:main'
+rdf2dot = 'rdflib.tools.rdf2dot:main'
+rdfs2dot = 'rdflib.tools.rdfs2dot:main'
+rdfgraphisomorphism = 'rdflib.tools.graphisomorphism:main'
+sparqlquery = 'rdflib.tools.sparqlquery:main'
+
+[project.optional-dependencies]
+berkeleydb = ["berkeleydb>=18.1.0,<19"]
+networkx = ["networkx>=2,<4"]
+html = ["html5rdf>=1.2,<2"]
+lxml = ["lxml>=4.3,<6.0"]
+orjson = ["orjson>=3.9.14,<4"]
+rdf4j = ["httpx>=0.28.1,<1"]
+graphdb = ["httpx>=0.28.1,<1"]
+
 [tool.poetry]
 packages = [
     { include = "rdflib" },
@@ -40,25 +62,6 @@ include = [
     { path = "docs", format = "sdist" },
     { path = "examples", format = "sdist" },
 ]
-
-[tool.poetry.scripts]
-rdfpipe = 'rdflib.tools.rdfpipe:main'
-csv2rdf = 'rdflib.tools.csv2rdf:main'
-rdf2dot = 'rdflib.tools.rdf2dot:main'
-rdfs2dot = 'rdflib.tools.rdfs2dot:main'
-rdfgraphisomorphism = 'rdflib.tools.graphisomorphism:main'
-sparqlquery = 'rdflib.tools.sparqlquery:main'
-
-[tool.poetry.dependencies]
-python = ">=3.10"
-isodate = {version=">=0.7.2,<1.0.0", python = "<3.11"}
-pyparsing = ">=2.1.0,<4"
-berkeleydb = {version = "^18.1.0", optional = true}
-networkx = {version = ">=2,<4", optional = true}
-html5rdf = {version = ">=1.2,<2", optional = true}
-lxml = {version = ">=4.3,<6.0", optional = true}
-orjson = {version = ">=3.9.14,<4", optional = true}
-httpx = {version = "^0.28.1", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 black = "24.8.0"
@@ -87,17 +90,6 @@ mkdocs-include-markdown-plugin = {version = "^7.2.0", python = ">=3.11"}
 
 [tool.poetry.group.lint.dependencies]
 ruff = "0.15.0"
-
-[tool.poetry.extras]
-berkeleydb = ["berkeleydb"]
-networkx = ["networkx"]
-# html support is optional, it is used only in tokenizing `rdf:HTML` type Literals
-html = ["html5rdf"]
-# lxml support is optional, it is used only for parsing XML-formatted SPARQL results
-lxml = ["lxml"]
-orjson = ["orjson"]
-rdf4j = ["httpx"]
-graphdb = ["httpx"]
 
 [tool.poetry.requires-plugins]
 poetry-plugin-export = ">=1.10"
