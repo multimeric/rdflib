@@ -1,13 +1,8 @@
-[tool.poetry]
+[project]
 name = "rdflib"
 version = "7.7.0a0"
 description = """RDFLib is a Python library for working with RDF, \
 a simple yet powerful language for representing information."""
-authors = ["Daniel 'eikeon' Krech <eikeon@eikeon.com>"]
-maintainers = ["RDFLib Team <rdflib-dev@googlegroups.com>"]
-repository = "https://github.com/RDFLib/rdflib"
-documentation = "https://rdflib.readthedocs.org/"
-license = "BSD-3-Clause"
 classifiers=[
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -23,7 +18,22 @@ classifiers=[
     "Operating System :: OS Independent",
     "Natural Language :: English"
 ]
+license = "BSD-3-Clause"
 readme = "README.md"
+
+[[project.authors]]
+name = "Daniel 'eikeon' Krech"
+email = "eikeon@eikeon.com"
+
+[[project.maintainers]]
+name = "RDFLib Team"
+email = "rdflib-dev@googlegroups.com"
+
+[project.urls]
+repository = "https://github.com/RDFLib/rdflib"
+documentation = "https://rdflib.readthedocs.org/"
+
+[tool.poetry]
 packages = [
     { include = "rdflib" },
 ]
@@ -90,6 +100,9 @@ lxml = ["lxml"]
 orjson = ["orjson"]
 rdf4j = ["httpx"]
 graphdb = ["httpx"]
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.10"
 
 [build-system]
 requires = ["poetry-core>=1.4.0"]
