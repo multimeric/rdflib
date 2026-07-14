@@ -1,14 +1,14 @@
 [project]
 name = "rdflib"
 version = "7.7.0a0"
-    
+description = """RDFLib is a Python library for working with RDF, \
+a simple yet powerful language for representing information."""
+
 [[project.maintainers]]
 name = "RDFLib Team"
 email = "rdflib-dev@googlegroups.com"
 
 [tool.poetry]
-description = """RDFLib is a Python library for working with RDF, \
-a simple yet powerful language for representing information."""
 authors = ["Daniel 'eikeon' Krech <eikeon@eikeon.com>"]
 repository = "https://github.com/RDFLib/rdflib"
 documentation = "https://rdflib.readthedocs.org/"
@@ -35,6 +35,9 @@ include = [
     { path = "docs", format = "sdist" },
     { path = "examples", format = "sdist" },
 ]
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.10"
 
 [tool.poetry.scripts]
 rdfpipe = 'rdflib.tools.rdfpipe:main'
