@@ -33,6 +33,7 @@ jobs:
           - python-version: "3.11"
             os: ubuntu-latest
             extensive-tests: true
+            suffix: "-extensive"
           - python-version: "3.10"
             os: ubuntu-latest
             extensive-tests: true
@@ -44,6 +45,7 @@ jobs:
             TOXENV_SUFFIX: "-lxml"
           - python-version: "3.11"
             os: ubuntu-latest
+            suffix: "-docs"
             TOXENV_SUFFIX: "-docs"
             TOX_PYTEST_EXTRA_ARGS: "-m 'not (testcontainer or webtest)'"
     steps:
