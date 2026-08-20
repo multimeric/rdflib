@@ -59,7 +59,7 @@ def test_build_context_param(graph_name, expected_graph_name_param):
 )
 def test_rdf_payload_to_stream(
     data: str | bytes | t.BinaryIO | Graph | Dataset,
-    expected_value_type: type[io.BufferedIOBase | io.RawIOBase],
+    expected_value_type: type[io.BufferedIOBase | io.BytesIO],
     expected_should_close: bool,
 ):
     value, should_close = rdf_payload_to_stream(data)

@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import warnings
 from io import TextIOWrapper
-from typing import TYPE_CHECKING, Any, BinaryIO, List, Optional, TextIO, Union
+from typing import TYPE_CHECKING, Any, BinaryIO, Optional, TextIO, Union
 
 from rdflib.graph import ConjunctiveGraph, Dataset, Graph
 from rdflib.parser import InputSource, Parser
@@ -40,7 +40,7 @@ class HextuplesParser(Parser):
         self.skolemize = False
 
     def _parse_hextuple(
-        self, ds: Union[Dataset, ConjunctiveGraph], tup: List[Union[str, None]]
+        self, ds: Union[Dataset, ConjunctiveGraph], tup: list[Union[str, None]]
     ) -> None:
         # all values check
         # subject, predicate, value, datatype cannot be None
@@ -124,11 +124,11 @@ class HextuplesParser(Parser):
             ds.remove_graph(ds_default)  # remove the original unused default graph
 
         try:
-            text_stream: Optional[TextIO] = source.getCharacterStream()
+            text_stream: Optional[TextIO] = source.getCharacterStream()  # type: ignore[assignment]
         except (AttributeError, LookupError):
             text_stream = None
         try:
-            binary_stream: Optional[BinaryIO] = source.getByteStream()
+            binary_stream: Optional[BinaryIO] = source.getByteStream()  # type: ignore[assignment]
         except (AttributeError, LookupError):
             binary_stream = None
 
@@ -165,7 +165,7 @@ class HextuplesParser(Parser):
             # this complex handing is because the 'value' component is
             # allowed to be "" but not None
             # all other "" values are treated as None
-            raw_line: List[str] = loads(line)
+            raw_line: list[str] = loads(line)
             hex_tuple_line = [x if x != "" else None for x in raw_line]
             if raw_line[2] == "":
                 hex_tuple_line[2] = ""
