@@ -4,6 +4,7 @@ import json
 from collections.abc import Mapping, Sequence
 from http.client import IncompleteRead, RemoteDisconnected
 from typing import Union
+from urllib.error import URLError
 
 import pytest
 
@@ -139,8 +140,8 @@ def test_service_with_values():
     """
     try:
         results = helper.query_with_retry(g, q)
-    except (RemoteDisconnected, IncompleteRead):
-        pytest.skip("this test uses dbpedia which is down sometimes")
+    except (RemoteDisconnected, IncompleteRead, URLError):
+        pytest.skip("this test uses dbpedia which is sometimes unavailable")
     assert len(results) == 2
 
     for r in results:

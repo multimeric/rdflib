@@ -3,6 +3,9 @@ name = "rdflib"
 version = "7.7.0a0"
 description = """RDFLib is a Python library for working with RDF, \
 a simple yet powerful language for representing information."""
+authors = [{ name = "Daniel 'eikeon' Krech", email = "eikeon@eikeon.com" }]
+maintainers = [{ name = "RDFLib Team", email = "rdflib-dev@googlegroups.com" }]
+license = { text = "BSD-3-Clause" }
 classifiers=[
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -16,25 +19,16 @@ classifiers=[
     "Operating System :: OS Independent",
     "Natural Language :: English"
 ]
-license = "BSD-3-Clause"
 readme = "README.md"
-dependencies = [
-    "isodate>=0.7.2,<1.0.0",
-    "pyparsing>=2.1.0,<4"
-]
 requires-python = ">=3.10"
-
-[[project.authors]]
-name = "Daniel 'eikeon' Krech"
-email = "eikeon@eikeon.com"
-
-[[project.maintainers]]
-name = "RDFLib Team"
-email = "rdflib-dev@googlegroups.com"
+dependencies = [
+    "isodate>=0.7.2,<1.0.0; python_version < '3.11'",
+    "pyparsing>=3.1.0,<4",
+]
 
 [project.urls]
-repository = "https://github.com/RDFLib/rdflib"
-documentation = "https://rdflib.readthedocs.org/"
+Repository = "https://github.com/RDFLib/rdflib"
+Documentation = "https://rdflib.readthedocs.org/"
 
 [project.scripts]
 rdfpipe = 'rdflib.tools.rdfpipe:main'
@@ -45,58 +39,47 @@ rdfgraphisomorphism = 'rdflib.tools.graphisomorphism:main'
 sparqlquery = 'rdflib.tools.sparqlquery:main'
 
 [project.optional-dependencies]
-berkeleydb = ["berkeleydb>=18.1.0,<19"]
-networkx = ["networkx>=2,<4"]
+berkeleydb = ["berkeleydb>=18.1.0,<19.0.0"]
+networkx = ["networkx>=2.8.8,<4"]
 html = ["html5rdf>=1.2,<2"]
-lxml = ["lxml>=4.3,<6.0"]
+lxml = ["lxml>=4.6.5,<6.0"]
 orjson = ["orjson>=3.9.14,<4"]
-rdf4j = ["httpx>=0.28.1,<1"]
-graphdb = ["httpx>=0.28.1,<1"]
+rdf4j = ["httpx>=0.28.1,<0.29.0"]
+graphdb = ["httpx>=0.28.1,<0.29.0"]
 
-[tool.poetry]
-packages = [
-    { include = "rdflib" },
+[dependency-groups]
+dev = [
+    "black==24.8.0",
+    "isort>=5.13.2,<6.0.0",
+    "mypy==1.14.1",
+    "lxml-stubs>=0.4,<0.6",
+    "pip-tools>=7.4.1,<8.0.0",
 ]
-include = [
-    { path = "test", format = "sdist" },
-    { path = "docs", format = "sdist" },
-    { path = "examples", format = "sdist" },
+tests = [
+    "pytest>=7.1.3,<9.0.0",
+    "pytest-cov>=4,<6",
+    "coverage[toml]>=7.0.1,<8.0.0",
+    "types-setuptools>=68.0.0.3,<72.0.0.0",
+    "setuptools>=68,<72",
+    "wheel>=0.42,<0.46",
+    "testcontainers>=4.13.2,<5.0.0",
 ]
-
-[tool.poetry.group.dev.dependencies]
-black = "24.8.0"
-mypy = ">=2.1.0,<3.0.0"
-lxml-stubs = ">=0.4,<0.6"
-pip-tools = "^7.4.1"
-
-[tool.poetry.group.tests.dependencies]
-pytest = ">=7.1.3,<9.0.0"
-pytest-cov = ">=4,<6"
-coverage = {version = "^7.0.1", extras = ["toml"]}
-types-setuptools = ">=68.0.0.3,<72.0.0.0"
-setuptools = ">=68,<72"
-wheel = ">=0.42,<0.46"
-testcontainers = {version = "^4.13.2"}
-
-[tool.poetry.group.docs.dependencies]
-typing-extensions = "^4.11.0"
-mkdocs = ">=1.6.1"
-mkdocs-material = ">=9.6.12"
+coverage = ["coveralls==4.1.0; python_version >= '3.10'"]
+docs = [
+    "typing-extensions>=4.11.0,<5.0.0",
+    "zensical>=0.0.51; python_version >= '3.11'",
 # Set python to 3.11 or greater as that's what's used in the validate workflow to test doc builds.
-mkdocstrings = {version = "^0.26.2", extras = ["python"], python = ">=3.11"}
-mkdocs-gen-files = "^0.5.0"
-# Set python to 3.11 or greater as that's what's used in the validate workflow to test doc builds.
-mkdocs-include-markdown-plugin = {version = "^7.2.0", python = ">=3.11"}
-
-[tool.poetry.group.lint.dependencies]
-ruff = "0.15.0"
-
-[tool.poetry.requires-plugins]
-poetry-plugin-export = ">=1.10"
+    "mkdocstrings[python]>=1.0.6; python_version >= '3.11'",
+    "httpx>=0.28.1,<0.29.0",
+]
+lint = ["ruff==0.15.0"]
 
 [build-system]
-requires = ["poetry-core>=1.4.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["rdflib*"]
 
 [tool.ruff]
 # https://beta.ruff.rs/docs/configuration/
@@ -132,7 +115,6 @@ select = [
     "UP026", # mock is deprecated, use unittest.mock
     "UP029", # Unnecessary builtin import
     "UP034", # Avoid extraneous parentheses
-    "UP035", # Import from {target} instead:
     "UP036", # Version block is outdated for minimum Python version
     "UP037", # Remove quotes from type annotation
     "UP039", # Unnecessary parentheses after class definition
@@ -240,7 +222,7 @@ log_cli_date_format = "%Y-%m-%dT%H:%M:%S"
 
 [tool.isort]
 profile = "black"
-py_version = 38
+py_version = 310
 line_length = 88
 src_paths= ["rdflib", "test", "devtools", "examples"]
 supported_extensions = ["pyw", "pyi", "py"]
@@ -284,6 +266,7 @@ check_untyped_defs = true
 branch = true
 source = ["rdflib"]
 omit = ["*/_type_checking.py"]
+relative_files = true
 
 [tool.coverage.report]
 exclude_lines = [

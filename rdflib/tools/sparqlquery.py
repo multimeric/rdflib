@@ -158,15 +158,13 @@ def _extract_query_and_format(parser) -> tuple[dict[str, Any], Optional[str]]:
 
 
 def parse_args():
-    extra_kwargs: dict[str, Any] = {}
-    extra_kwargs["exit_on_error"] = False
     parser = argparse.ArgumentParser(
         prog="sparqlquery",
         description=__doc__,
         add_help=False,  # add dynamic epilog before help is added
         formatter_class=argparse.RawDescriptionHelpFormatter,
         # else __doc__ wont be printed on error:
-        **extra_kwargs,
+        exit_on_error=False,
     )
     parser.add_argument(
         "-q",
