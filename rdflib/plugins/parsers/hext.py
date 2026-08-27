@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import warnings
 from io import TextIOWrapper
-from typing import TYPE_CHECKING, Any, BinaryIO, Optional, TextIO, Union, cast
+from typing import TYPE_CHECKING, Any, BinaryIO, Callable, Optional, TextIO, Union, cast
 
 from rdflib.graph import ConjunctiveGraph, Dataset, Graph
 from rdflib.parser import InputSource, Parser
@@ -139,6 +139,7 @@ class HextuplesParser(Parser):
         if TYPE_CHECKING:
             assert text_stream is not None or binary_stream is not None
         use_stream: TextIO | BinaryIO
+        loads: Callable[[str | bytes], Any]
         if _HAS_ORJSON:
             if binary_stream is not None:
                 use_stream = binary_stream

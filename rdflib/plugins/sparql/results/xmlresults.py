@@ -69,7 +69,7 @@ class XMLResult(Result):
         if FOUND_LXML:
             lxml_parser = lxml_etree.XMLParser(huge_tree=True, encoding=parser_encoding)
             tree = cast(
-                xml_etree.ElementTree[xml_etree.Element],
+                "xml_etree.ElementTree[xml_etree.Element]",
                 lxml_etree.parse(source, parser=lxml_parser),
             )
         else:
