@@ -2043,10 +2043,10 @@ class TurtleParser(Parser):
         p = SinkParser(sink, baseURI=baseURI, turtle=turtle)
         # N3 parser prefers str stream
         stream: Reader[str] | Reader[bytes] | None = cast(
-            Reader[str], source.getCharacterStream()
+            "Reader[str]", source.getCharacterStream()
         )
         if not stream:
-            stream = cast(Reader[bytes], source.getByteStream())
+            stream = cast("Reader[bytes]", source.getByteStream())
         if not stream:
             raise Exception("No valid stream available for parsing.")
         p.loadStream(stream)
