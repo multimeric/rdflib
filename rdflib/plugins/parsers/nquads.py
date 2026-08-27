@@ -30,7 +30,7 @@ from __future__ import annotations
 
 from codecs import getreader
 from collections.abc import MutableMapping
-from typing import Any, Optional
+from typing import IO, Any, Optional, cast
 
 from rdflib.exceptions import ParserError as ParseError
 from rdflib.graph import ConjunctiveGraph, Dataset, Graph
@@ -95,10 +95,10 @@ class NQuadsParser(W3CNTriplesParser):
         self.sink: Dataset = ds  # type: ignore[assignment]
         self.skolemize = skolemize
 
-        source = inputsource.getCharacterStream()
+        source: IO[str] | None = cast(IO[str], inputsource.getCharacterStream())
         if not source:
-            source = inputsource.getByteStream()  # type: ignore[assignment]
-            source = getreader("utf-8")(source)  # type: ignore[arg-type]
+            byte_stream = cast(IO[bytes], inputsource.getByteStream())
+            source = cast(IO[str], getreader("utf-8")(byte_stream))
 
         if not hasattr(source, "read"):
             raise ParseError("Item to parse must be a file-like object.")

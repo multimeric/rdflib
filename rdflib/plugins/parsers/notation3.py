@@ -39,13 +39,13 @@ from collections.abc import Callable, MutableSequence
 from decimal import Decimal
 from re import Match, Pattern
 from typing import (
-    IO,
     TYPE_CHECKING,
     Any,
     NoReturn,
     Optional,
     TypeVar,
     Union,
+    cast,
 )
 from uuid import uuid4
 
@@ -63,6 +63,9 @@ from rdflib.term import (
     Variable,
     _unique_id,
 )
+
+if TYPE_CHECKING:
+    from typing_extensions import Reader
 
 __all__ = [
     "BadSyntax",
@@ -482,7 +485,7 @@ class SinkParser:
     def formula(self) -> Optional[Formula]:
         return self._formula
 
-    def loadStream(self, stream: Union[IO[str], IO[bytes]]) -> Optional[Formula]:
+    def loadStream(self, stream: Reader[str] | Reader[bytes]) -> Optional[Formula]:
         return self.loadBuf(stream.read())  # Not ideal
 
     def loadBuf(self, buf: Union[str, bytes]) -> Optional[Formula]:
@@ -2039,10 +2042,14 @@ class TurtleParser(Parser):
         baseURI = graph.absolutize(source.getPublicId() or source.getSystemId() or "")
         p = SinkParser(sink, baseURI=baseURI, turtle=turtle)
         # N3 parser prefers str stream
-        stream = source.getCharacterStream()
+        stream: Reader[str] | Reader[bytes] | None = cast(
+            Reader[str], source.getCharacterStream()
+        )
         if not stream:
-            stream = source.getByteStream()  # type: ignore[assignment]
-        p.loadStream(stream)  # type: ignore[arg-type]
+            stream = cast(Reader[bytes], source.getByteStream())
+        if not stream:
+            raise Exception("No valid stream available for parsing.")
+        p.loadStream(stream)
 
         for prefix, namespace in p._bindings.items():
             graph.bind(prefix, namespace)

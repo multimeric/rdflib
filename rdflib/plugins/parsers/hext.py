@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import warnings
 from io import TextIOWrapper
-from typing import TYPE_CHECKING, Any, BinaryIO, Optional, TextIO, Union
+from typing import TYPE_CHECKING, Any, BinaryIO, Optional, TextIO, Union, cast
 
 from rdflib.graph import ConjunctiveGraph, Dataset, Graph
 from rdflib.parser import InputSource, Parser
@@ -124,11 +124,11 @@ class HextuplesParser(Parser):
             ds.remove_graph(ds_default)  # remove the original unused default graph
 
         try:
-            text_stream: Optional[TextIO] = source.getCharacterStream()  # type: ignore[assignment]
+            text_stream = cast(TextIO | None, source.getCharacterStream())
         except (AttributeError, LookupError):
             text_stream = None
         try:
-            binary_stream: Optional[BinaryIO] = source.getByteStream()  # type: ignore[assignment]
+            binary_stream = cast(BinaryIO | None, source.getByteStream())
         except (AttributeError, LookupError):
             binary_stream = None
 
@@ -138,7 +138,7 @@ class HextuplesParser(Parser):
             )
         if TYPE_CHECKING:
             assert text_stream is not None or binary_stream is not None
-        use_stream: Union[TextIO, BinaryIO]
+        use_stream: TextIO | BinaryIO
         if _HAS_ORJSON:
             if binary_stream is not None:
                 use_stream = binary_stream

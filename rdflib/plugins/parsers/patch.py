@@ -3,7 +3,7 @@ from __future__ import annotations
 from codecs import getreader
 from collections.abc import MutableMapping
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import IO, TYPE_CHECKING, Any, Optional, Union, cast
 
 from rdflib.exceptions import ParserError as ParseError
 from rdflib.graph import Dataset
@@ -70,10 +70,10 @@ class RDFPatchParser(NQuadsParser):
         self.sink: Dataset = Dataset(store=sink.store)
         self.skolemize = skolemize
 
-        source = inputsource.getCharacterStream()
+        source: IO[str] | None = cast(IO[str], inputsource.getCharacterStream())
         if not source:
-            source = inputsource.getByteStream()  # type: ignore[assignment]
-            source = getreader("utf-8")(source)  # type: ignore[arg-type]
+            byte_stream = cast(IO[bytes], inputsource.getByteStream())
+            source = cast(IO[str], getreader("utf-8")(byte_stream))
 
         if not hasattr(source, "read"):
             raise ParseError("Item to parse must be a file-like object.")
