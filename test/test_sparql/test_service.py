@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from collections.abc import Mapping, Sequence
 from http.client import IncompleteRead, RemoteDisconnected
-from typing import Dict, FrozenSet, List, Mapping, Sequence, Tuple, Type, Union
+from typing import Union
 from urllib.error import URLError
 
 import pytest
