@@ -46,7 +46,6 @@ jobs:
             TOXENV_SUFFIX: "-lxml"
           - python-version: "3.11"
             os: ubuntu-latest
-            suffix: "-docs"
             TOXENV_SUFFIX: "-docs"
             TOX_PYTEST_EXTRA_ARGS: "-m 'not (testcontainer or webtest)'"
     steps:

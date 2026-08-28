@@ -335,7 +335,6 @@ If you make a pull-request to RDFLib on GitHub, GitHub Actions will automaticall
 Please do *not* commit tests you know will fail, even if you're just pointing out a bug. If you commit such tests, flag them as expecting to fail.
 
 ## Compatibility
-RDFlib 7.7.0 release and later only support Python 3.10.0 and newer.
 
 RDFLib 8.0.0 release and later only support Python 3.10 and newer.
 
